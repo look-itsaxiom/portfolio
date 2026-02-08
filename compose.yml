@@ -1,0 +1,46 @@
+services:
+  portfolio-web:
+    build: ./web
+    container_name: portfolio-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - QDRANT_URL=http://qdrant:6333
+      - OLLAMA_URL=${OLLAMA_URL:-http://host.docker.internal:11434}
+      - DISCORD_BOT_URL=http://ask-axiom-bot:3100
+      - NODE_ENV=production
+    networks:
+      - edge
+    depends_on:
+      - qdrant
+      - ask-axiom-bot
+
+  ask-axiom-bot:
+    build: ./discord-bot
+    container_name: ask-axiom-bot
+    restart: unless-stopped
+    ports:
+      - "3100:3100"
+    environment:
+      - DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN}
+      - DISCORD_USER_ID=${DISCORD_USER_ID}
+      - NEXTJS_CALLBACK_URL=http://portfolio-web:3000/api/discord-callback
+    networks:
+      - edge
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: portfolio-qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"
+    volumes:
+      - ./qdrant-data:/qdrant/storage
+    networks:
+      - edge
+
+networks:
+  edge:
+    external: true
