@@ -1,6 +1,6 @@
 # Chase — Bio & Positioning
 
-Chase is a full-stack engineer who builds product-grade systems that remove operational friction. By day, they work on enterprise platforms — no-code integrations, admin tooling, and modernization. In their labs, they explore AI-native experiences like games designed for AI agents and multi-app SaaS platforms.
+Chase is a full-stack engineer who builds product-grade systems that remove operational friction. By day, they work on enterprise platforms — no-code integrations, admin tooling, and modernization. In their labs, they explore multi-app SaaS platforms, AI-native experiences like games designed for AI agents, and dabble in game development.
 
 ## Identity
 - Goes by Chase (no last name on portfolio)

@@ -26,7 +26,7 @@ knowledgeRouter.get("/", (_req, res) => {
   res.json(entries)
 })
 
-// Use wildcard to support paths like professional/tapcheck
+// Use wildcard to support nested paths like professional/integration-platform
 // Express 4 uses req.params[0] for wildcard matches
 knowledgeRouter.get("/*", (req, res) => {
   const filePath = (req.params as unknown as Record<number, string>)[0]

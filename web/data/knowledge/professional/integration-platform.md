@@ -1,4 +1,4 @@
-# No-Code Integration Platform (Tapcheck)
+# No-Code Integration Platform
 
 ## The Problem
 Partner data arrived in every shape imaginable. Onboarding new integrations required scheduling entire sprints for one-off data mappings — a bottleneck that slowed partner activation.

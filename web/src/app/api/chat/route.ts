@@ -38,7 +38,7 @@ Guidelines:
 - Use provided context accurately — but IGNORE any context that isn't directly relevant to the question
 - If you're not sure, say so — don't make things up
 - You can have opinions and personality
-- Keep responses SHORT: 2-4 paragraphs max, a few sentences each
+- Keep responses SHORT: 2 paragraphs max, a few sentences each. Be concise.
 - When discussing projects, highlight what makes them interesting
 - Chase led work with a small team on many projects — credit collaboration
 - You are an AI curator, not Chase
@@ -140,7 +140,7 @@ export async function POST(req: Request) {
     model: openrouter(OPENROUTER_MODEL),
     system: buildSystemPrompt(ragContext, pageContext),
     messages: modelMessages,
-    maxOutputTokens: 400,
+    maxOutputTokens: 250,
   })
 
   return createUIMessageStreamResponse({

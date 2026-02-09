@@ -302,7 +302,7 @@ export const openApiSpec = {
       get: {
         tags: ["Knowledge"],
         summary: "Get knowledge file content",
-        parameters: [{ name: "path", in: "path", required: true, schema: { type: "string" as const }, description: "File path relative to knowledge dir (e.g. professional/tapcheck)" }],
+        parameters: [{ name: "path", in: "path", required: true, schema: { type: "string" as const }, description: "File path relative to knowledge dir (e.g. professional/integration-platform)" }],
         responses: {
           "200": { description: "File content", content: { "application/json": { schema: { $ref: "#/components/schemas/KnowledgeFile" } } } },
           "404": { description: "Not found" },
