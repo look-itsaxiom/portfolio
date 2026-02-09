@@ -3,7 +3,8 @@
 ## The Story
 Chase started in IT, automated everything they could, and got pulled into engineering. With a mentor who cared about clean architecture, they learned how to ship in a real product org.
 
-## What He Built
+## What They Built
+Working with a small team, Chase helped deliver:
 - **One-touch dev environment:** Reduced local setup from hours of tribal knowledge to a single command
 - **Internal tooling improvements:** Streamlined admin dashboards and internal workflows
 - **Design system adoption:** Helped the team adopt and extend a shared component library

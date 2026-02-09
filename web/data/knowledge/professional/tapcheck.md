@@ -4,7 +4,7 @@
 Partner data arrived in every shape imaginable. Onboarding new integrations required scheduling entire sprints for one-off data mappings — a bottleneck that slowed partner activation.
 
 ## The Solution
-Chase built a no-code integration system that lets admins define schemas and transformations through a visual UI. Instead of writing custom code for each partner, the platform abstracts the complexity into configurable workflows.
+Chase led a small team building a no-code integration system that lets admins define schemas and transformations through a visual UI. Instead of writing custom code for each partner, the platform abstracts the complexity into configurable workflows.
 
 ## Technical Approach
 - **Stack:** TypeScript, Node.js, React, AWS, PostgreSQL
