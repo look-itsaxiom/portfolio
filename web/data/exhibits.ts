@@ -1,0 +1,51 @@
+export type Exhibit = {
+  slug: string
+  title: string
+  category: "impact" | "labs" | "devlog" | "trivia"
+  description: string
+  axiomNote: string
+  href: string
+}
+
+export const exhibits: Exhibit[] = [
+  {
+    slug: "tapcheck",
+    title: "No‑Code Integration Platform",
+    category: "impact",
+    description: "Onboarding in days, not weeks.",
+    axiomNote: "Chase led this with a small team — the impact is very real.",
+    href: "/impact/tapcheck",
+  },
+  {
+    slug: "drink-ux",
+    title: "Drink‑UX",
+    category: "labs",
+    description: "A better coffee ordering UI.",
+    axiomNote: "A playful interface with serious UX intent.",
+    href: "/labs/drink-ux",
+  },
+  {
+    slug: "clawcraft",
+    title: "ClawCraft.ai",
+    category: "labs",
+    description: "A game built for AI agents.",
+    axiomNote: "This is what happens when APIs become the game client.",
+    href: "/labs/clawcraft",
+  },
+  {
+    slug: "axiom-stage",
+    title: "Ask Axiom Stage",
+    category: "devlog",
+    description: "Ask Axiom becomes the hero experience.",
+    axiomNote: "A curator should have a stage.",
+    href: "/devlog/2026-02-09-axiom-stage",
+  },
+  {
+    slug: "trivia-1",
+    title: "RAG Trivia",
+    category: "trivia",
+    description: "Chase likes building AI interfaces where docs are the UI.",
+    axiomNote: "Docs as interface is a recurring theme.",
+    href: "/about",
+  },
+]
