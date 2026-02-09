@@ -1,5 +1,4 @@
 import { ExhibitCarousel } from "@/components/exhibit-carousel"
-import { AsciiMascot } from "@/components/ascii-mascot"
 import { AskAxiomTrigger } from "@/components/ask-axiom-trigger"
 import { ChatDock } from "@/components/chat-dock"
 import { getExhibits } from "@/data/exhibits"
@@ -26,7 +25,6 @@ export function StageHero() {
                 </p>
                 <AskAxiomTrigger />
               </div>
-              <AsciiMascot inline className="mt-6 text-sm text-primary/80" />
               <div className="mt-8">
                 <ExhibitCarousel exhibits={exhibits} />
               </div>
