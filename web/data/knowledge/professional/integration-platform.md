@@ -7,7 +7,7 @@ Partner data arrived in every shape imaginable. Onboarding new integrations requ
 Chase led a small team building a no-code integration system that lets admins define schemas and transformations through a visual UI. Instead of writing custom code for each partner, the platform abstracts the complexity into configurable workflows.
 
 ## Technical Approach
-- **Stack:** TypeScript, Node.js, React, AWS, PostgreSQL
+- **Stack:** Angular, TypeScript, .NET, PostgreSQL
 - **Architecture:** Modular backend with pluggable data source adapters
 - **Frontend:** Admin UI for schema definition, field mapping, and transformation rules
 - Started with file-based inputs (CSV, Excel)

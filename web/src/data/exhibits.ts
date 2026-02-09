@@ -6,7 +6,7 @@ const DATA_ROOT = path.join(process.cwd(), "data")
 export type Exhibit = {
   slug: string
   title: string
-  category: "impact" | "labs" | "devlog" | "trivia"
+  category: "about" | "impact" | "labs" | "devlog" | "trivia"
   description: string
   axiomNote: string
   href: string

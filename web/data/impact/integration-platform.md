@@ -6,7 +6,7 @@ impact:
   - "Cut onboarding timelines from weeks to days."
   - "Enabled admins to configure schemas + transformations without engineering."
   - "Established foundation for API‑driven workflows."
-stack: ["TypeScript", "Node.js", "React", "AWS", "PostgreSQL"]
+stack: ["Angular", "TypeScript", ".NET", "PostgreSQL"]
 tags: ["impact", "integrations", "platform"]
 ---
 

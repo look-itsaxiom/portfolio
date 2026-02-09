@@ -6,7 +6,7 @@
     "tagline": "I turned weeks of integration work into a few clicks.",
     "description": "Built a no-code integration system that lets admins define schemas and transformations through UI. Started with file-based inputs, expanded to timeclock and payroll, and laid the foundation for API-based no-code via workflow automation.",
     "story": "Partner data arrived in every shape imaginable. Instead of burning sprints on one-off mappings, I built a no-code integration system that lets admins define schemas and transformations through UI. We started with file-based inputs, expanded to timeclock and payroll, and laid the foundation for API-based no-code via workflow automation. Result: onboarding went from \"schedule a sprint\" to \"ship it this week.\"",
-    "stack": ["TypeScript", "Node.js", "React", "AWS", "PostgreSQL"],
+    "stack": ["Angular", "TypeScript", ".NET", "PostgreSQL"],
     "axiomComment": "This is where Chase turned weeks of integration work into a few clicks..."
   },
   {

@@ -9,6 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import Autoplay from "embla-carousel-autoplay"
 
 function askAxiom(title: string) {
   window.dispatchEvent(
@@ -18,9 +19,17 @@ function askAxiom(title: string) {
   )
 }
 
+function openAxiom() {
+  window.dispatchEvent(new CustomEvent("open-axiom-chat", { detail: {} }))
+}
+
 export function ExhibitCarousel({ exhibits }: { exhibits: Exhibit[] }) {
   return (
-    <Carousel opts={{ loop: true }} className="w-full">
+    <Carousel
+      opts={{ loop: true }}
+      plugins={[Autoplay({ delay: 7000, stopOnInteraction: true })]}
+      className="w-full"
+    >
       <CarouselContent>
         {exhibits.map((exhibit) => (
           <CarouselItem key={exhibit.slug}>
@@ -30,12 +39,18 @@ export function ExhibitCarousel({ exhibits }: { exhibits: Exhibit[] }) {
               </div>
               <h2 className="mt-1 text-xl font-semibold">{exhibit.title}</h2>
               <p className="mt-1 text-sm text-muted-foreground">{exhibit.description}</p>
-              <GlowButton
-                className="mt-3"
-                onClick={() => askAxiom(exhibit.title)}
-              >
-                Ask Axiom about this
-              </GlowButton>
+              {exhibit.category === "about" ? (
+                <GlowButton className="mt-3" onClick={openAxiom}>
+                  Chat with Axiom
+                </GlowButton>
+              ) : (
+                <GlowButton
+                  className="mt-3"
+                  onClick={() => askAxiom(exhibit.title)}
+                >
+                  Ask Axiom about this
+                </GlowButton>
+              )}
               <p className="mt-3 text-sm italic text-muted-foreground">
                 &ldquo;{exhibit.axiomNote}&rdquo;
               </p>

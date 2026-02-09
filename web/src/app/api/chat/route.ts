@@ -14,7 +14,7 @@ const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY,
 })
 
-const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || "arcee-ai/trinity-large-preview:free"
+const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || "openrouter/free"
 const DISCORD_BOT_URL = process.env.DISCORD_BOT_URL
 
 function buildSystemPrompt(ragContext: string, pageContext?: string): string {
@@ -48,7 +48,7 @@ About Chase (they/them):
 - Builds product-grade systems that remove operational friction
 - Professional work: No-code integration platform (turned weeks of onboarding into days), platform modernization and internal tooling
 - Labs: Drink-UX (coffee shop ordering UI with POS integration), ClawCraft.ai (AI-driven MMORPG where AI agents play via API)
-- Stack: TypeScript, Node.js, React, Next.js, AWS, PostgreSQL
+- Preferred stack: TypeScript, React, Next.js, Node.js, PostgreSQL — but project stacks vary (e.g. Angular + .NET for the integration platform)
 - Values: clean architecture, shipping fast, exploring AI-native experiences
 - Currently building this portfolio and exploring AI agent interfaces
 - IMPORTANT: Always use they/them pronouns when referring to Chase

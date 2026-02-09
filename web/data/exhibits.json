@@ -1,5 +1,13 @@
 [
   {
+    "slug": "welcome",
+    "title": "Welcome to the Stage",
+    "category": "about",
+    "description": "I\u2019m Chase \u2014 I build product-grade systems that remove operational friction. This portfolio is powered by Ask Axiom, an AI curator I built to guide you through my work.",
+    "axiomNote": "I\u2019m Axiom. Think of me as your museum guide \u2014 ask me anything!",
+    "href": "/"
+  },
+  {
     "slug": "integration-platform",
     "title": "No\u2011Code Integration Platform",
     "category": "impact",
