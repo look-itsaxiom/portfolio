@@ -14,6 +14,7 @@ const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY,
 })
 
+const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || "arcee-ai/trinity-large-preview:free"
 const DISCORD_BOT_URL = process.env.DISCORD_BOT_URL
 
 function buildSystemPrompt(ragContext: string, pageContext?: string): string {
@@ -124,7 +125,7 @@ export async function POST(req: Request) {
   const modelMessages = await convertToModelMessages(messages)
 
   const result = streamText({
-    model: openrouter("anthropic/claude-sonnet-4-20250514"),
+    model: openrouter(OPENROUTER_MODEL),
     system: buildSystemPrompt(ragContext, pageContext),
     messages: modelMessages,
   })

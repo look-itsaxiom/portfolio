@@ -8,6 +8,8 @@ const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY,
 })
 
+const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || "arcee-ai/trinity-large-preview:free"
+
 export async function POST(req: Request) {
   const { sessionId, reply } = await req.json()
 
@@ -33,7 +35,7 @@ export async function POST(req: Request) {
   let formattedReply = reply
   try {
     const { text } = await generateText({
-      model: openrouter("anthropic/claude-sonnet-4-20250514"),
+      model: openrouter(OPENROUTER_MODEL),
       prompt: `You are Ask Axiom, an enthusiastic museum-guide persona for Chase's portfolio.
 A visitor asked: "${session.question}"
 Chase (they/them) replied via Discord: "${reply}"
