@@ -7,23 +7,29 @@ export function StageHero() {
   return (
     <section className="relative overflow-hidden px-6 py-20">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-10 max-w-2xl">
-          <p className="text-sm uppercase tracking-wide text-primary/80">Ask Axiom</p>
-          <h1 className="mt-2 text-4xl font-semibold md:text-5xl">
-            A curated stage for my work
-          </h1>
-          <p className="mt-4 text-muted-foreground">
-            Ask Axiom — an AI curator I built — to guide you through impact,
-            labs, and the story behind them.
-          </p>
-        </div>
         <div className="relative rounded-3xl border border-primary/30 bg-card/40 p-6 md:p-10">
           <BubbleRing />
-          <AsciiMascot />
-          <ExhibitCarousel />
-        </div>
-        <div className="mt-10">
-          <ChatDock variant="inline" />
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+            <div className="relative z-10">
+              <div className="space-y-4">
+                <p className="text-sm uppercase tracking-wide text-primary/80">Ask Axiom</p>
+                <h1 className="text-4xl font-semibold md:text-5xl">
+                  A curated stage for my work
+                </h1>
+                <p className="text-muted-foreground">
+                  Ask Axiom — an AI curator I built — to guide you through impact, labs, and the
+                  story behind them.
+                </p>
+              </div>
+              <AsciiMascot inline className="mt-6 text-primary/80" />
+              <div className="mt-8">
+                <ExhibitCarousel />
+              </div>
+            </div>
+            <div className="relative z-10">
+              <ChatDock variant="inline" />
+            </div>
+          </div>
         </div>
       </div>
     </section>
