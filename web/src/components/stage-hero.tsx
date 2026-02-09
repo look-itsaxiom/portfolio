@@ -1,5 +1,6 @@
 import { ExhibitCarousel } from "@/components/exhibit-carousel"
 import { AsciiMascot } from "@/components/ascii-mascot"
+import { AskAxiomTrigger } from "@/components/ask-axiom-trigger"
 import { ChatDock } from "@/components/chat-dock"
 import { getExhibits } from "@/data/exhibits"
 import { getSuggestedPrompts } from "@/lib/data"
@@ -23,6 +24,7 @@ export function StageHero() {
                   I&apos;m Chase — I build product-grade systems that remove operational friction.
                   Ask Axiom, an AI curator I built, to guide you through my work.
                 </p>
+                <AskAxiomTrigger />
               </div>
               <AsciiMascot inline className="mt-6 text-sm text-primary/80" />
               <div className="mt-8">

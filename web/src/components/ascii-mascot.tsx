@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils"
 const frames = {
   idle: [" /\\_/\\ ", "( o.o )", " > ^ <"],
   blink: [" /\\_/\\ ", "( -.- )", " > ^ <"],
-  talk1: [" /\\_/\\ ", "( \u2312.\u2312 )", " > o <"],
-  talk2: [" /\\_/\\ ", "( \u2312.\u2312 )", " > ^ <"],
+  talk1: [" /\\_/\\ ", "( o.o )", " > o <"],
+  talk2: [" /\\_/\\ ", "( o.o )", " > ^ <"],
 }
 
 type AsciiMascotProps = {

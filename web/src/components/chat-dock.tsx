@@ -72,10 +72,13 @@ export function ChatDock({ variant, suggestedPrompts = [] }: ChatDockProps) {
   const isLoading = status === "submitted" || status === "streaming"
 
   // Notify mascot when Axiom is streaming
+  const prevStatusRef = useRef(status)
   useEffect(() => {
-    if (status === "streaming") {
+    const prev = prevStatusRef.current
+    prevStatusRef.current = status
+    if (status === "streaming" && prev !== "streaming") {
       window.dispatchEvent(new Event("axiom-stream-start"))
-    } else {
+    } else if (status !== "streaming" && prev === "streaming") {
       window.dispatchEvent(new Event("axiom-stream-end"))
     }
   }, [status])
@@ -358,7 +361,7 @@ export function ChatDock({ variant, suggestedPrompts = [] }: ChatDockProps) {
 
   if (variant === "inline") {
     return (
-      <div className="flex max-h-[600px] flex-col rounded-2xl border border-primary/20 bg-card/50 shadow-[0_0_30px_rgba(139,92,246,0.12)]">
+      <div className="flex h-[600px] flex-col rounded-2xl border border-primary/20 bg-card/50 shadow-[0_0_30px_rgba(139,92,246,0.12)]">
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden">{ChatPanel}</div>
       </div>
     )
