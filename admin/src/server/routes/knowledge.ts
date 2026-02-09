@@ -27,8 +27,10 @@ knowledgeRouter.get("/", (_req, res) => {
 })
 
 // Use wildcard to support paths like professional/tapcheck
-knowledgeRouter.get("/*path", (req, res) => {
-  const filePath = Array.isArray(req.params.path) ? req.params.path.join("/") : req.params.path
+// Express 4 uses req.params[0] for wildcard matches
+knowledgeRouter.get("/*", (req, res) => {
+  const filePath = (req.params as unknown as Record<number, string>)[0]
+  if (!filePath) { res.status(400).json({ error: "path required" }); return }
   try {
     const content = readPlainMarkdown("knowledge", filePath)
     res.json({ path: filePath, content })
@@ -37,8 +39,9 @@ knowledgeRouter.get("/*path", (req, res) => {
   }
 })
 
-knowledgeRouter.put("/*path", (req, res) => {
-  const filePath = Array.isArray(req.params.path) ? req.params.path.join("/") : req.params.path
+knowledgeRouter.put("/*", (req, res) => {
+  const filePath = (req.params as unknown as Record<number, string>)[0]
+  if (!filePath) { res.status(400).json({ error: "path required" }); return }
   const { content } = req.body
   if (content === undefined) {
     res.status(400).json({ error: "content is required" })
@@ -48,8 +51,9 @@ knowledgeRouter.put("/*path", (req, res) => {
   res.json({ ok: true, path: filePath })
 })
 
-knowledgeRouter.delete("/*path", (req, res) => {
-  const filePath = Array.isArray(req.params.path) ? req.params.path.join("/") : req.params.path
+knowledgeRouter.delete("/*", (req, res) => {
+  const filePath = (req.params as unknown as Record<number, string>)[0]
+  if (!filePath) { res.status(400).json({ error: "path required" }); return }
   deleteMarkdownFile("knowledge", filePath + ".md")
   res.json({ ok: true })
 })
