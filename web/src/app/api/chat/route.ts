@@ -14,7 +14,7 @@ const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY,
 })
 
-const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || "openrouter/free"
+const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || "arcee-ai/trinity-large-preview:free"
 const DISCORD_BOT_URL = process.env.DISCORD_BOT_URL
 
 function buildSystemPrompt(ragContext: string, pageContext?: string): string {
@@ -114,15 +114,14 @@ export async function POST(req: Request) {
 
   // Try RAG search
   let ragContext = ""
-  let searchSucceeded = false
-  let collectionHasData = false
+  let ragSearched = false
   try {
     const ragAvailable = await isRagAvailable()
     if (ragAvailable && ragQuery) {
-      collectionHasData = await isCollectionSeeded()
+      const collectionHasData = await isCollectionSeeded()
       if (collectionHasData) {
+        ragSearched = true
         const results = await searchKnowledge(ragQuery)
-        searchSucceeded = true
         if (results.length > 0) {
           ragContext = results
             .map((r) => `[Source: ${r.source}]\n${r.text}`)
@@ -140,9 +139,9 @@ export async function POST(req: Request) {
     : undefined
 
   // Discord fallback with SSE wait loop:
-  // Only when the knowledge base is seeded, the search succeeded (no errors),
-  // but genuinely found nothing relevant for this question.
-  if (searchSucceeded && collectionHasData && !ragContext && DISCORD_BOT_URL && userQuery) {
+  // Triggers when RAG found nothing relevant OR when RAG is entirely unavailable.
+  // This ensures the visitor can still reach Chase even without the full stack running.
+  if (!ragContext && DISCORD_BOT_URL && userQuery) {
     try {
       const sessionId = randomUUID()
       createSession(sessionId, userQuery, pageContext || "").catch(() => {})

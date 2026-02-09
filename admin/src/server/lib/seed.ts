@@ -65,6 +65,8 @@ function categorize(filePath: string): string {
   if (filePath.includes("professional")) return "professional"
   if (filePath.includes("labs")) return "labs"
   if (filePath.includes("meta")) return "meta"
+  if (filePath.includes("devlog")) return "devlog"
+  if (filePath.includes("impact")) return "impact"
   return "general"
 }
 
@@ -81,14 +83,18 @@ export async function runSeed() {
   seedStatus.completedAt = undefined
 
   try {
-    const knowledgeDir = path.join(DATA_DIR, "knowledge")
-    const files = getMarkdownFiles(knowledgeDir)
-
-    if (files.length === 0) {
-      throw new Error("No knowledge files found in " + knowledgeDir)
+    // Index knowledge, devlog, and impact directories
+    const dirs = ["knowledge", "devlog", "impact"]
+    const files: string[] = []
+    for (const dir of dirs) {
+      files.push(...getMarkdownFiles(path.join(DATA_DIR, dir)))
     }
 
-    seedStatus.message = `Found ${files.length} knowledge files`
+    if (files.length === 0) {
+      throw new Error("No content files found in " + DATA_DIR)
+    }
+
+    seedStatus.message = `Found ${files.length} content files`
     seedStatus.progress = 5
 
     // Parse all chunks
@@ -96,7 +102,7 @@ export async function runSeed() {
     for (const file of files) {
       const content = fs.readFileSync(file, "utf-8")
       const chunks = chunkText(content)
-      const source = path.relative(knowledgeDir, file).replace(/\.md$/, "").replace(/\\/g, "/")
+      const source = path.relative(DATA_DIR, file).replace(/\.md$/, "").replace(/\\/g, "/")
       const category = categorize(file)
 
       for (const text of chunks) {
