@@ -20,8 +20,8 @@ export function StageHero() {
                   A curated stage for my work
                 </h1>
                 <p className="text-muted-foreground">
-                  Ask Axiom — an AI curator I built — to guide you through impact, labs, and the
-                  story behind them.
+                  I&apos;m Chase — I build product-grade systems that remove operational friction.
+                  Ask Axiom, an AI curator I built, to guide you through my work.
                 </p>
               </div>
               <AsciiMascot inline className="mt-6 text-sm text-primary/80" />

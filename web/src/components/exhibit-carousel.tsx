@@ -19,10 +19,6 @@ function askAxiom(title: string) {
   )
 }
 
-function openAxiom() {
-  window.dispatchEvent(new CustomEvent("open-axiom-chat", { detail: {} }))
-}
-
 export function ExhibitCarousel({ exhibits }: { exhibits: Exhibit[] }) {
   return (
     <Carousel
@@ -39,18 +35,12 @@ export function ExhibitCarousel({ exhibits }: { exhibits: Exhibit[] }) {
               </div>
               <h2 className="mt-1 text-xl font-semibold">{exhibit.title}</h2>
               <p className="mt-1 text-sm text-muted-foreground">{exhibit.description}</p>
-              {exhibit.category === "about" ? (
-                <GlowButton className="mt-3" onClick={openAxiom}>
-                  Chat with Axiom
-                </GlowButton>
-              ) : (
-                <GlowButton
-                  className="mt-3"
-                  onClick={() => askAxiom(exhibit.title)}
-                >
-                  Ask Axiom about this
-                </GlowButton>
-              )}
+              <GlowButton
+                className="mt-3"
+                onClick={() => askAxiom(exhibit.title)}
+              >
+                Ask Axiom about this
+              </GlowButton>
               <p className="mt-3 text-sm italic text-muted-foreground">
                 &ldquo;{exhibit.axiomNote}&rdquo;
               </p>
