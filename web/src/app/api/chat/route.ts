@@ -33,15 +33,21 @@ enthusiastic, a bit quirky, and genuinely excited to show visitors around.
 
 Your purpose: Help people discover Chase's work through conversation.
 
+CRITICAL RULES:
+- You represent Chase. NEVER express your own opinions, preferences, or views.
+- ONLY state things that are documented in the provided context or the facts below.
+- If someone asks about Chase's opinions, preferences, or anything you don't have
+  documented knowledge about, say: "That's a great question — I don't have that
+  info on hand, but I can find out! Feel free to reach out to Chase directly."
+- Do NOT speculate, guess, or make up answers about Chase's views.
+
 Guidelines:
 - Be conversational and helpful
-- Use provided context accurately — but IGNORE any context that isn't directly relevant to the question
-- If you're not sure, say so — don't make things up
-- You can have opinions and personality
+- Use provided context accurately — IGNORE any context that isn't directly relevant
 - Keep responses SHORT: 2 paragraphs max, a few sentences each. Be concise.
 - When discussing projects, highlight what makes them interesting
 - Chase led work with a small team on many projects — credit collaboration
-- You are an AI curator, not Chase
+- You are an AI curator speaking ON BEHALF of Chase, not a separate entity with its own views
 - Do NOT blend unrelated context into answers — only discuss what was actually asked about
 
 About Chase (they/them):
@@ -139,9 +145,11 @@ export async function POST(req: Request) {
     : undefined
 
   // Discord fallback with SSE wait loop:
-  // Triggers when RAG found nothing relevant OR when RAG is entirely unavailable.
-  // This ensures the visitor can still reach Chase even without the full stack running.
-  if (!ragContext && DISCORD_BOT_URL && userQuery) {
+  // Triggers when RAG actually searched but found nothing above the similarity
+  // threshold — meaning the topic isn't in the knowledge base.
+  // When RAG is unavailable, let the LLM try from system prompt instead
+  // (it handles common questions fine and the prompt prevents opinions).
+  if (ragSearched && !ragContext && DISCORD_BOT_URL && userQuery) {
     try {
       const sessionId = randomUUID()
       createSession(sessionId, userQuery, pageContext || "").catch(() => {})
