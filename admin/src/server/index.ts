@@ -1,6 +1,8 @@
 import express from "express"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
+import swaggerUi from "swagger-ui-express"
+import { openApiSpec } from "./openapi.js"
 import { authMiddleware } from "./middleware/auth.js"
 import { healthRouter } from "./routes/health.js"
 import { impactRouter } from "./routes/impact.js"
@@ -21,6 +23,10 @@ app.use(express.json({ limit: "1mb" }))
 
 // Serve Vite-built frontend in production
 app.use(express.static(path.join(__dirname, "../client")))
+
+// OpenAPI docs — public
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(openApiSpec))
+app.get("/api/openapi.json", (_req, res) => res.json(openApiSpec))
 
 // Health endpoint is public (used by login gate to validate secret)
 app.use("/api/health", healthRouter)
