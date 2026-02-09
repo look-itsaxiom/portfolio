@@ -24,3 +24,6 @@ qdrant-data/
 # IDE
 .vscode/
 .idea/
+
+# Worktrees
+.worktrees/
