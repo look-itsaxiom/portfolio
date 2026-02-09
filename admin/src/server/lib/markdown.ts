@@ -1,6 +1,5 @@
 import fs from "node:fs"
 import path from "node:path"
-import os from "node:os"
 import matter from "gray-matter"
 
 const DATA_DIR = process.env.DATA_DIR || path.join(process.cwd(), "data")
@@ -57,8 +56,8 @@ export function writeMarkdownWithFrontmatter(
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
 
   const raw = matter.stringify("\n" + body, frontmatter)
-  // Atomic write: temp file then rename
-  const tmp = path.join(os.tmpdir(), `admin-${Date.now()}-${path.basename(filename)}`)
+  // Atomic write: temp file in same directory then rename (avoids cross-device errors)
+  const tmp = filepath + `.tmp.${Date.now()}`
   fs.writeFileSync(tmp, raw, "utf-8")
   fs.renameSync(tmp, filepath)
 }
@@ -73,7 +72,7 @@ export function writePlainMarkdown(subdir: string, relativePath: string, content
   const dir = path.dirname(filepath)
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
 
-  const tmp = path.join(os.tmpdir(), `admin-${Date.now()}-${path.basename(filepath)}`)
+  const tmp = filepath + `.tmp.${Date.now()}`
   fs.writeFileSync(tmp, content, "utf-8")
   fs.renameSync(tmp, filepath)
 }
