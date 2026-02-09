@@ -35,11 +35,10 @@ export function ExhibitCarousel({ exhibits }: { exhibits: Exhibit[] }) {
   const [isTyping, setIsTyping] = useState(false)
   const [blink, setBlink] = useState(false)
   const [talkFrame, setTalkFrame] = useState(0)
-  const [streamTalking, setStreamTalking] = useState(false)
   const typingRef = useRef<ReturnType<typeof setInterval>>(undefined)
 
   const currentNote = exhibits[activeIndex]?.axiomNote || ""
-  const talking = isTyping || streamTalking
+  const talking = isTyping
 
   // Track active slide
   useEffect(() => {
@@ -76,18 +75,6 @@ export function ExhibitCarousel({ exhibits }: { exhibits: Exhibit[] }) {
 
     return () => { if (typingRef.current) clearInterval(typingRef.current) }
   }, [currentNote])
-
-  // Listen for chat streaming events
-  useEffect(() => {
-    function onStart() { setStreamTalking(true) }
-    function onEnd() { setStreamTalking(false) }
-    window.addEventListener("axiom-stream-start", onStart)
-    window.addEventListener("axiom-stream-end", onEnd)
-    return () => {
-      window.removeEventListener("axiom-stream-start", onStart)
-      window.removeEventListener("axiom-stream-end", onEnd)
-    }
-  }, [])
 
   // Blink when idle
   useEffect(() => {

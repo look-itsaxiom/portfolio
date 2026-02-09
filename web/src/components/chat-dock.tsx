@@ -71,18 +71,6 @@ export function ChatDock({ variant, suggestedPrompts = [] }: ChatDockProps) {
 
   const isLoading = status === "submitted" || status === "streaming"
 
-  // Notify mascot when Axiom is streaming
-  const prevStatusRef = useRef(status)
-  useEffect(() => {
-    const prev = prevStatusRef.current
-    prevStatusRef.current = status
-    if (status === "streaming" && prev !== "streaming") {
-      window.dispatchEvent(new Event("axiom-stream-start"))
-    } else if (status !== "streaming" && prev === "streaming") {
-      window.dispatchEvent(new Event("axiom-stream-end"))
-    }
-  }, [status])
-
   // Health check on mount — disable if any core service is down
   useEffect(() => {
     fetch("/api/health")
