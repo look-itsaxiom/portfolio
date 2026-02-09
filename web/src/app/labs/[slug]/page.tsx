@@ -9,7 +9,9 @@ export function generateStaticParams() {
   return getAllLabs().map((entry) => ({ slug: entry.slug }))
 }
 
-export default function LabPage({ params }: { params: { slug: string } }) {
+export default function LabPage({ params }: { params: { slug?: string } }) {
+  if (!params?.slug) notFound()
+
   const entry = getLabBySlug(params.slug)
   if (!entry) notFound()
 
@@ -51,11 +53,7 @@ export default function LabPage({ params }: { params: { slug: string } }) {
       {entry.links?.length ? (
         <div className="mt-8 flex flex-wrap gap-3">
           {entry.links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm text-primary hover:underline"
-            >
+            <a key={link.href} href={link.href} className="text-sm text-primary hover:underline">
               {link.label} →
             </a>
           ))}

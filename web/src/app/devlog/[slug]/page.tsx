@@ -9,7 +9,9 @@ export function generateStaticParams() {
   return getAllDevlog().map((entry) => ({ slug: entry.slug }))
 }
 
-export default function DevlogDetailPage({ params }: { params: { slug: string } }) {
+export default function DevlogDetailPage({ params }: { params: { slug?: string } }) {
+  if (!params?.slug) notFound()
+
   const entry = getDevlogBySlug(params.slug)
   if (!entry) notFound()
 

@@ -9,7 +9,9 @@ export function generateStaticParams() {
   return getAllImpact().map((entry) => ({ slug: entry.slug }))
 }
 
-export default function ImpactPage({ params }: { params: { slug: string } }) {
+export default function ImpactPage({ params }: { params: { slug?: string } }) {
+  if (!params?.slug) notFound()
+
   const entry = getImpactBySlug(params.slug)
   if (!entry) notFound()
 
