@@ -92,7 +92,7 @@ export async function POST(req: Request) {
   if (ragAvailable && !ragContext && DISCORD_BOT_URL && userQuery) {
     try {
       const sessionId = randomUUID()
-      const sessionPromise = createSession(sessionId, userQuery, pageContext || "")
+      void createSession(sessionId, userQuery, pageContext || "")
 
       await fetch(`${DISCORD_BOT_URL}/send-dm`, {
         method: "POST",
