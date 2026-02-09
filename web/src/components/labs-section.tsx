@@ -1,7 +1,9 @@
-import { labsProjects } from "@/lib/data"
+import { getLabsProjects } from "@/lib/data"
 import { ProjectCard } from "@/components/project-card"
 
 export function LabsSection() {
+  const labsProjects = getLabsProjects()
+
   return (
     <section id="labs" className="py-20">
       <div className="mx-auto max-w-5xl px-6">

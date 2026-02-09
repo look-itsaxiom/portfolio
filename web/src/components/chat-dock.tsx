@@ -16,7 +16,6 @@ import {
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
-import { suggestedPrompts } from "@/lib/data"
 import { AXIOM_DISCLOSURE } from "@/lib/axiom-voice"
 
 function getMessageText(message: { parts?: { type: string; text?: string }[] }): string {
@@ -49,9 +48,10 @@ type FallbackStatus = "idle" | "waiting" | "typing" | "timeout"
 
 type ChatDockProps = {
   variant: "inline" | "drawer"
+  suggestedPrompts?: string[]
 }
 
-export function ChatDock({ variant }: ChatDockProps) {
+export function ChatDock({ variant, suggestedPrompts = [] }: ChatDockProps) {
   const [open, setOpen] = useState(false)
   const [input, setInput] = useState("")
   const [chatDisabled, setChatDisabled] = useState(false)

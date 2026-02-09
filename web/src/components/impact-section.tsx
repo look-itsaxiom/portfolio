@@ -1,7 +1,9 @@
-import { impactProjects } from "@/lib/data"
+import { getImpactProjects } from "@/lib/data"
 import { ProjectCard } from "@/components/project-card"
 
 export function ImpactSection() {
+  const impactProjects = getImpactProjects()
+
   return (
     <section id="impact" className="py-20">
       <div className="mx-auto max-w-5xl px-6">

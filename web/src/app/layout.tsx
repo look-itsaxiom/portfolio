@@ -4,6 +4,7 @@ import "./globals.css"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { ChatWidget } from "@/components/chat-widget"
+import { getSuggestedPrompts } from "@/lib/data"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +27,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const suggestedPrompts = getSuggestedPrompts()
+
   return (
     <html lang="en" className="dark">
       <body
@@ -34,7 +37,7 @@ export default function RootLayout({
         <SiteHeader />
         <main className="flex flex-1 flex-col">{children}</main>
         <SiteFooter />
-        <ChatWidget />
+        <ChatWidget suggestedPrompts={suggestedPrompts} />
       </body>
     </html>
   )

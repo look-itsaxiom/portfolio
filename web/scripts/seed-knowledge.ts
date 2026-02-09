@@ -1,8 +1,8 @@
 import { readFileSync, readdirSync, statSync } from "fs"
 import { join, relative } from "path"
 
-const QDRANT_URL = process.env.QDRANT_URL || "http://localhost:6333"
-const OLLAMA_URL = process.env.OLLAMA_URL || "http://localhost:11434"
+const QDRANT_URL = process.env.QDRANT_URL || "http://home.skib:6333"
+const OLLAMA_URL = process.env.OLLAMA_URL || "http://home.skib:11434"
 const COLLECTION = process.env.QDRANT_COLLECTION || "ask-axiom-knowledge"
 const EMBED_MODEL = process.env.OLLAMA_MODEL || "nomic-embed-text"
 

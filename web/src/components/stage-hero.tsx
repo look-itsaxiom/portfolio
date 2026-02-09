@@ -1,8 +1,13 @@
 import { ExhibitCarousel } from "@/components/exhibit-carousel"
 import { AsciiMascot } from "@/components/ascii-mascot"
 import { ChatDock } from "@/components/chat-dock"
+import { getExhibits } from "@/data/exhibits"
+import { getSuggestedPrompts } from "@/lib/data"
 
 export function StageHero() {
+  const exhibits = getExhibits()
+  const suggestedPrompts = getSuggestedPrompts()
+
   return (
     <section className="relative flex flex-1 items-center overflow-hidden px-6 py-6">
       <div className="mx-auto w-full max-w-6xl">
@@ -21,11 +26,11 @@ export function StageHero() {
               </div>
               <AsciiMascot inline className="mt-6 text-sm text-primary/80" />
               <div className="mt-8">
-                <ExhibitCarousel />
+                <ExhibitCarousel exhibits={exhibits} />
               </div>
             </div>
             <div className="relative z-10 flex flex-col">
-              <ChatDock variant="inline" />
+              <ChatDock variant="inline" suggestedPrompts={suggestedPrompts} />
             </div>
           </div>
         </div>

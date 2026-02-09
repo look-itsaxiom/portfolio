@@ -3,8 +3,8 @@
 import { usePathname } from "next/navigation"
 import { ChatDock } from "@/components/chat-dock"
 
-export function ChatWidget() {
+export function ChatWidget({ suggestedPrompts }: { suggestedPrompts?: string[] }) {
   const pathname = usePathname()
   if (pathname === "/") return null
-  return <ChatDock variant="drawer" />
+  return <ChatDock variant="drawer" suggestedPrompts={suggestedPrompts} />
 }

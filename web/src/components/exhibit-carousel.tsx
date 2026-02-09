@@ -1,6 +1,6 @@
 "use client"
 
-import { exhibits } from "@/data/exhibits"
+import type { Exhibit } from "@/data/exhibits"
 import { GlowButton } from "@/components/ui/glow-button"
 import {
   Carousel,
@@ -18,7 +18,7 @@ function askAxiom(title: string) {
   )
 }
 
-export function ExhibitCarousel() {
+export function ExhibitCarousel({ exhibits }: { exhibits: Exhibit[] }) {
   return (
     <Carousel opts={{ loop: true }} className="w-full">
       <CarouselContent>
