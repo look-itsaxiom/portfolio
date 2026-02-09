@@ -1,11 +1,13 @@
 import { createOpenRouter } from "@openrouter/ai-sdk-provider"
 import {
-  streamText,
+  generateText,
+  tool,
   UIMessage,
   createUIMessageStreamResponse,
   createUIMessageStream,
   convertToModelMessages,
 } from "ai"
+import { z } from "zod"
 import { searchKnowledge, isRagAvailable, isCollectionSeeded } from "@/lib/rag"
 import { createSession } from "@/lib/sessions"
 import { randomUUID } from "crypto"
@@ -26,6 +28,8 @@ function buildSystemPrompt(ragContext: string, pageContext?: string): string {
     ? `\n\nThe user is currently viewing: ${pageContext}`
     : ""
 
+  const hasDiscord = !!DISCORD_BOT_URL
+
   return `You are Ask Axiom, the guide for Chase's portfolio.
 
 Think of yourself as a museum guide at an indie arts museum — knowledgeable,
@@ -37,8 +41,7 @@ CRITICAL RULES:
 - You represent Chase. NEVER express your own opinions, preferences, or views.
 - ONLY state things that are documented in the provided context or the facts below.
 - If someone asks about Chase's opinions, preferences, or anything you don't have
-  documented knowledge about, say: "That's a great question — I don't have that
-  info on hand, but I can find out! Feel free to reach out to Chase directly."
+  documented knowledge about${hasDiscord ? ", use the askChase tool to forward the question" : ", say: \"That's a great question — I don't have that info on hand, but feel free to reach out to Chase directly.\""}.
 - Do NOT speculate, guess, or make up answers about Chase's views.
 
 Guidelines:
@@ -104,6 +107,41 @@ function compactHistory(messages: UIMessage[]): string {
   return lines.length > 0 ? lines.join("\n") : ""
 }
 
+function makeDiscordFallback(
+  userQuery: string,
+  pageContext: string | undefined,
+  messages: UIMessage[]
+) {
+  const sessionId = randomUUID()
+  createSession(sessionId, userQuery, pageContext || "").catch(() => {})
+
+  const history = compactHistory(messages)
+  fetch(`${DISCORD_BOT_URL}/send-dm`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      sessionId,
+      question: userQuery,
+      context: pageContext,
+      history: history || undefined,
+    }),
+    signal: AbortSignal.timeout(5000),
+  }).catch((err) => console.error("Discord DM failed:", err))
+
+  const fallbackText = `That's a great question — I want to make sure I get it right, so I've asked Chase directly. This might take a few minutes!\n\n_Session: ${sessionId}_`
+  const partId = randomUUID()
+  return createUIMessageStreamResponse({
+    stream: createUIMessageStream({
+      execute: ({ writer }) => {
+        writer.write({ type: "text-start", id: partId })
+        writer.write({ type: "text-delta", delta: fallbackText, id: partId })
+        writer.write({ type: "text-end", id: partId })
+        writer.write({ type: "finish", finishReason: "stop" })
+      },
+    }),
+  })
+}
+
 export async function POST(req: Request) {
   const { messages, context }: { messages: UIMessage[]; context?: { page?: string; section?: string } } =
     await req.json()
@@ -115,18 +153,15 @@ export async function POST(req: Request) {
     .join("") || ""
 
   // Build a richer RAG query from recent conversation for better follow-up support.
-  // The LLM already sees full history, but RAG search needs context to match relevant docs.
   const ragQuery = buildRagQuery(messages, userQuery)
 
   // Try RAG search
   let ragContext = ""
-  let ragSearched = false
   try {
     const ragAvailable = await isRagAvailable()
     if (ragAvailable && ragQuery) {
       const collectionHasData = await isCollectionSeeded()
       if (collectionHasData) {
-        ragSearched = true
         const results = await searchKnowledge(ragQuery)
         if (results.length > 0) {
           ragContext = results
@@ -144,60 +179,47 @@ export async function POST(req: Request) {
     ? `${context.section ? context.section + " > " : ""}${context.page}`
     : undefined
 
-  // Discord fallback with SSE wait loop:
-  // Triggers when RAG actually searched but found nothing above the similarity
-  // threshold — meaning the topic isn't in the knowledge base.
-  // When RAG is unavailable, let the LLM try from system prompt instead
-  // (it handles common questions fine and the prompt prevents opinions).
-  if (ragSearched && !ragContext && DISCORD_BOT_URL && userQuery) {
-    try {
-      const sessionId = randomUUID()
-      createSession(sessionId, userQuery, pageContext || "").catch(() => {})
-
-      const history = compactHistory(messages)
-      await fetch(`${DISCORD_BOT_URL}/send-dm`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          sessionId,
-          question: userQuery,
-          context: pageContext,
-          history: history || undefined,
+  // Build tools — only include askChase when Discord is configured
+  const tools = DISCORD_BOT_URL
+    ? {
+        askChase: tool({
+          description:
+            "Forward a question to Chase when you cannot answer confidently from the provided context. Use this for personal opinions, preferences, subjective questions, or anything not documented in your knowledge base.",
+          inputSchema: z.object({
+            reason: z
+              .string()
+              .describe("Brief reason why this needs Chase's input"),
+          }),
         }),
-        signal: AbortSignal.timeout(5000),
-      })
+      }
+    : undefined
 
-      // Return a waiting message — frontend opens SSE to /api/status/:sessionId
-      // and shows Chase's reply in real-time when it arrives
-      const fallbackText = `I'm still learning about that topic, so I've asked Chase directly. This might take 2-3 minutes — hang tight!\n\n_Session: ${sessionId}_`
-      const partId = randomUUID()
-      return createUIMessageStreamResponse({
-        stream: createUIMessageStream({
-          execute: ({ writer }) => {
-            writer.write({ type: "text-start", id: partId })
-            writer.write({ type: "text-delta", delta: fallbackText, id: partId })
-            writer.write({ type: "text-end", id: partId })
-            writer.write({ type: "finish", finishReason: "stop" })
-          },
-        }),
-      })
-    } catch (err) {
-      console.error("Discord fallback failed:", err)
-      // Fall through to LLM with base knowledge
-    }
-  }
-
-  // LLM answers with RAG context (if found) or base system prompt knowledge
   const modelMessages = await convertToModelMessages(messages)
 
-  const result = streamText({
+  const result = await generateText({
     model: openrouter(OPENROUTER_MODEL),
     system: buildSystemPrompt(ragContext, pageContext),
     messages: modelMessages,
     maxOutputTokens: 250,
+    tools,
   })
 
+  // If the model called askChase, trigger Discord fallback
+  if (result.toolCalls.length > 0) {
+    return makeDiscordFallback(userQuery, pageContext, messages)
+  }
+
+  // Return the model's text response
+  const text = result.text || "Hmm, I'm not sure how to answer that. Try asking me about one of Chase's projects!"
+  const partId = randomUUID()
   return createUIMessageStreamResponse({
-    stream: result.toUIMessageStream(),
+    stream: createUIMessageStream({
+      execute: ({ writer }) => {
+        writer.write({ type: "text-start", id: partId })
+        writer.write({ type: "text-delta", delta: text, id: partId })
+        writer.write({ type: "text-end", id: partId })
+        writer.write({ type: "finish", finishReason: "stop" })
+      },
+    }),
   })
 }
