@@ -2,7 +2,7 @@ const QDRANT_URL = process.env.QDRANT_URL || "http://localhost:6333"
 const OLLAMA_URL = process.env.OLLAMA_URL || "http://localhost:11434"
 const COLLECTION = process.env.QDRANT_COLLECTION || "ask-axiom-knowledge"
 const EMBED_MODEL = process.env.OLLAMA_MODEL || "nomic-embed-text"
-const SIMILARITY_THRESHOLD = 0.7
+const SIMILARITY_THRESHOLD = 0.4
 
 export interface RagResult {
   text: string

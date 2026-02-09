@@ -93,8 +93,9 @@ export async function POST(req: Request) {
     ? `${context.section ? context.section + " > " : ""}${context.page}`
     : undefined
 
-  // Discord fallback: only when the knowledge base is seeded, search worked,
-  // but genuinely found nothing relevant for this question
+  // Discord fallback with SSE wait loop:
+  // Only when the knowledge base is seeded, the search succeeded (no errors),
+  // but genuinely found nothing relevant for this question.
   if (searchSucceeded && collectionHasData && !ragContext && DISCORD_BOT_URL && userQuery) {
     try {
       const sessionId = randomUUID()
@@ -111,6 +112,8 @@ export async function POST(req: Request) {
         signal: AbortSignal.timeout(5000),
       })
 
+      // Return a waiting message — frontend opens SSE to /api/status/:sessionId
+      // and shows Chase's reply in real-time when it arrives
       const fallbackText = `I'm still learning about that topic, so I've asked Chase directly. This might take 2-3 minutes — hang tight!\n\n_Session: ${sessionId}_`
       const partId = randomUUID()
       return createUIMessageStreamResponse({
@@ -129,6 +132,7 @@ export async function POST(req: Request) {
     }
   }
 
+  // LLM answers with RAG context (if found) or base system prompt knowledge
   const modelMessages = await convertToModelMessages(messages)
 
   const result = streamText({
