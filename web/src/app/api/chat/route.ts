@@ -57,6 +57,47 @@ Remember: You're here to make exploring Chase's work more engaging than
 reading static text. Be the guide people actually want to talk to.${contextSection}${pageSection}`
 }
 
+function getTextFromMessage(msg: UIMessage): string {
+  return (msg.parts || [])
+    .filter((p): p is { type: "text"; text: string } => p.type === "text")
+    .map((p) => p.text)
+    .join("")
+}
+
+// Combine recent messages into a single search query so RAG can find
+// relevant docs for follow-up questions like "what stack does it use?"
+function buildRagQuery(messages: UIMessage[], latestQuery: string): string {
+  if (messages.length <= 1) return latestQuery
+
+  // Take last 4 messages (2 turns) for context
+  const recent = messages.slice(-4)
+  const parts = recent.map((m) => getTextFromMessage(m)).filter(Boolean)
+  if (parts.length <= 1) return latestQuery
+
+  // Combine into a single query, latest message weighted by appearing last
+  return parts.join(" ").slice(0, 500)
+}
+
+// Compact conversation history into a readable summary for Discord DMs
+function compactHistory(messages: UIMessage[]): string {
+  if (messages.length <= 1) return ""
+
+  // Skip the very last user message (sent separately as the question)
+  const history = messages.slice(0, -1).slice(-6) // last 3 turns
+  if (history.length === 0) return ""
+
+  const lines = history.map((m) => {
+    const text = getTextFromMessage(m)
+    if (!text) return null
+    const role = m.role === "user" ? "Visitor" : "Axiom"
+    // Truncate long messages
+    const truncated = text.length > 200 ? text.slice(0, 200) + "..." : text
+    return `${role}: ${truncated}`
+  }).filter(Boolean)
+
+  return lines.length > 0 ? lines.join("\n") : ""
+}
+
 export async function POST(req: Request) {
   const { messages, context }: { messages: UIMessage[]; context?: { page?: string; section?: string } } =
     await req.json()
@@ -67,16 +108,20 @@ export async function POST(req: Request) {
     .map((p) => p.text)
     .join("") || ""
 
+  // Build a richer RAG query from recent conversation for better follow-up support.
+  // The LLM already sees full history, but RAG search needs context to match relevant docs.
+  const ragQuery = buildRagQuery(messages, userQuery)
+
   // Try RAG search
   let ragContext = ""
   let searchSucceeded = false
   let collectionHasData = false
   try {
     const ragAvailable = await isRagAvailable()
-    if (ragAvailable && userQuery) {
+    if (ragAvailable && ragQuery) {
       collectionHasData = await isCollectionSeeded()
       if (collectionHasData) {
-        const results = await searchKnowledge(userQuery)
+        const results = await searchKnowledge(ragQuery)
         searchSucceeded = true
         if (results.length > 0) {
           ragContext = results
@@ -102,6 +147,7 @@ export async function POST(req: Request) {
       const sessionId = randomUUID()
       createSession(sessionId, userQuery, pageContext || "").catch(() => {})
 
+      const history = compactHistory(messages)
       await fetch(`${DISCORD_BOT_URL}/send-dm`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -109,6 +155,7 @@ export async function POST(req: Request) {
           sessionId,
           question: userQuery,
           context: pageContext,
+          history: history || undefined,
         }),
         signal: AbortSignal.timeout(5000),
       })

@@ -57,7 +57,7 @@ app.get("/health", (_req, res) => {
 })
 
 app.post("/send-dm", async (req, res) => {
-  const { sessionId, question, context } = req.body
+  const { sessionId, question, context, history } = req.body
 
   if (!sessionId || !question) {
     res.status(400).json({ error: "Missing sessionId or question" })
@@ -71,8 +71,9 @@ app.post("/send-dm", async (req, res) => {
     const formattedMessage = [
       "**Ask Axiom Question**",
       "",
-      `**User asked:** "${question}"`,
-      context ? `**Context:** ${context}` : null,
+      history ? `**Conversation so far:**\n${history}\n` : null,
+      `**Latest question:** "${question}"`,
+      context ? `**Page:** ${context}` : null,
       "",
       "Reply to this message to respond.",
     ]
