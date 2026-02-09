@@ -1,5 +1,6 @@
 import { Router } from "express"
 import { readJsonArray, writeJsonArray } from "../lib/json-file.js"
+import { revalidate } from "../lib/revalidate.js"
 
 export const promptsRouter = Router()
 
@@ -14,5 +15,6 @@ promptsRouter.put("/", (req, res) => {
     return
   }
   writeJsonArray("suggested-prompts.json", prompts)
+  revalidate(["/"])
   res.json({ ok: true })
 })

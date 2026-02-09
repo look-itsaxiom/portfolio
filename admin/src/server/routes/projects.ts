@@ -1,5 +1,6 @@
 import { Router } from "express"
 import { readJsonArray, writeJsonArray } from "../lib/json-file.js"
+import { revalidate } from "../lib/revalidate.js"
 import type { Project } from "../../types/index.js"
 
 export const projectsRouter = Router()
@@ -30,6 +31,7 @@ projectsRouter.put("/:slug", (req, res) => {
   }
 
   writeJsonArray("projects.json", projects)
+  revalidate(["/", "/impact", "/labs"])
   res.json({ ok: true, slug: req.params.slug })
 })
 
@@ -37,6 +39,7 @@ projectsRouter.delete("/:slug", (req, res) => {
   const projects = readJsonArray<Project>("projects.json")
   const filtered = projects.filter((p) => p.slug !== req.params.slug)
   writeJsonArray("projects.json", filtered)
+  revalidate(["/", "/impact", "/labs"])
   res.json({ ok: true })
 })
 
@@ -57,5 +60,6 @@ projectsRouter.patch("/reorder", (req, res) => {
   }
 
   writeJsonArray("projects.json", reordered)
+  revalidate(["/", "/impact", "/labs"])
   res.json({ ok: true })
 })

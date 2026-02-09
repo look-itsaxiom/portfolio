@@ -1,5 +1,6 @@
 import { Router } from "express"
 import { readJsonArray, writeJsonArray } from "../lib/json-file.js"
+import { revalidate } from "../lib/revalidate.js"
 import type { Exhibit } from "../../types/index.js"
 
 export const exhibitsRouter = Router()
@@ -30,6 +31,7 @@ exhibitsRouter.put("/:slug", (req, res) => {
   }
 
   writeJsonArray("exhibits.json", exhibits)
+  revalidate(["/"])
   res.json({ ok: true, slug: req.params.slug })
 })
 
@@ -37,6 +39,7 @@ exhibitsRouter.delete("/:slug", (req, res) => {
   const exhibits = readJsonArray<Exhibit>("exhibits.json")
   const filtered = exhibits.filter((e) => e.slug !== req.params.slug)
   writeJsonArray("exhibits.json", filtered)
+  revalidate(["/"])
   res.json({ ok: true })
 })
 
@@ -56,5 +59,6 @@ exhibitsRouter.patch("/reorder", (req, res) => {
   }
 
   writeJsonArray("exhibits.json", reordered)
+  revalidate(["/"])
   res.json({ ok: true })
 })

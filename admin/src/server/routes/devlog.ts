@@ -5,6 +5,7 @@ import {
   writeMarkdownWithFrontmatter,
   deleteMarkdownFile,
 } from "../lib/markdown.js"
+import { revalidate } from "../lib/revalidate.js"
 
 export const devlogRouter = Router()
 
@@ -34,10 +35,12 @@ devlogRouter.put("/:slug", (req, res) => {
     return
   }
   writeMarkdownWithFrontmatter("devlog", `${req.params.slug}.md`, frontmatter, body)
+  revalidate(["/devlog", `/devlog/${req.params.slug}`])
   res.json({ ok: true, slug: req.params.slug })
 })
 
 devlogRouter.delete("/:slug", (req, res) => {
   deleteMarkdownFile("devlog", `${req.params.slug}.md`)
+  revalidate(["/devlog", `/devlog/${req.params.slug}`])
   res.json({ ok: true })
 })

@@ -5,6 +5,7 @@ import {
   writeMarkdownWithFrontmatter,
   deleteMarkdownFile,
 } from "../lib/markdown.js"
+import { revalidate } from "../lib/revalidate.js"
 
 export const impactRouter = Router()
 
@@ -34,10 +35,12 @@ impactRouter.put("/:slug", (req, res) => {
     return
   }
   writeMarkdownWithFrontmatter("impact", `${req.params.slug}.md`, frontmatter, body)
+  revalidate(["/", "/impact", `/impact/${req.params.slug}`])
   res.json({ ok: true, slug: req.params.slug })
 })
 
 impactRouter.delete("/:slug", (req, res) => {
   deleteMarkdownFile("impact", `${req.params.slug}.md`)
+  revalidate(["/", "/impact", `/impact/${req.params.slug}`])
   res.json({ ok: true })
 })
