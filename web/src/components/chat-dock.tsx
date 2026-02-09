@@ -14,7 +14,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Input } from "@/components/ui/input"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
 import { AXIOM_DISCLOSURE } from "@/lib/axiom-voice"
 
@@ -225,7 +224,7 @@ export function ChatDock({ variant, suggestedPrompts = [] }: ChatDockProps) {
         </div>
       </div>
 
-      <ScrollArea className="flex-1 px-4" ref={scrollRef}>
+      <div className="flex-1 overflow-y-auto px-4" ref={scrollRef}>
         <div className="space-y-4 py-4">
           {messages.length === 0 && (
             <div className="space-y-4">
@@ -327,7 +326,7 @@ export function ChatDock({ variant, suggestedPrompts = [] }: ChatDockProps) {
             </div>
           )}
         </div>
-      </ScrollArea>
+      </div>
 
       <form onSubmit={handleSubmit} className="border-t px-4 py-3 space-y-2">
         <p className="text-[11px] text-muted-foreground">{AXIOM_DISCLOSURE}</p>
@@ -350,8 +349,8 @@ export function ChatDock({ variant, suggestedPrompts = [] }: ChatDockProps) {
 
   if (variant === "inline") {
     return (
-      <div className="flex h-full flex-col rounded-2xl border border-primary/20 bg-card/50 shadow-[0_0_30px_rgba(139,92,246,0.12)]">
-        <div className="flex min-h-0 flex-1 flex-col">{ChatPanel}</div>
+      <div className="flex max-h-[600px] flex-col rounded-2xl border border-primary/20 bg-card/50 shadow-[0_0_30px_rgba(139,92,246,0.12)]">
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden">{ChatPanel}</div>
       </div>
     )
   }
