@@ -18,7 +18,6 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
 import { suggestedPrompts } from "@/lib/data"
 import { AXIOM_DISCLOSURE } from "@/lib/axiom-voice"
-import { AsciiMascot } from "@/components/ascii-mascot"
 
 function getMessageText(message: { parts?: { type: string; text?: string }[] }): string {
   if (!message.parts) return ""
@@ -223,7 +222,6 @@ export function ChatDock({ variant }: ChatDockProps) {
             <h2 className="text-base font-semibold">Ask Axiom</h2>
             <p className="text-xs text-muted-foreground">Your guide to Chase&apos;s work</p>
           </div>
-          <AsciiMascot inline className="hidden text-[10px] text-primary/80 sm:block" />
         </div>
       </div>
 
@@ -233,7 +231,7 @@ export function ChatDock({ variant }: ChatDockProps) {
             <div className="space-y-4">
               <div className="rounded-lg bg-muted/50 p-4">
                 <p className="text-sm text-muted-foreground">
-                  Hey! I&apos;m Axiom, the guide for Chase&apos;s portfolio. Think of me as the
+                  Hey! I&apos;m Ask Axiom, the guide for Chase&apos;s portfolio. Think of me as the
                   museum guide who&apos;s genuinely excited to show you around. Ask me anything!
                 </p>
               </div>
@@ -352,8 +350,8 @@ export function ChatDock({ variant }: ChatDockProps) {
 
   if (variant === "inline") {
     return (
-      <div className="rounded-2xl border border-primary/20 bg-card/50 shadow-[0_0_30px_rgba(139,92,246,0.12)]">
-        <div className="h-[520px]">{ChatPanel}</div>
+      <div className="flex h-full flex-col rounded-2xl border border-primary/20 bg-card/50 shadow-[0_0_30px_rgba(139,92,246,0.12)]">
+        <div className="flex min-h-0 flex-1 flex-col">{ChatPanel}</div>
       </div>
     )
   }

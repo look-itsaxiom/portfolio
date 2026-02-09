@@ -6,7 +6,7 @@ import {
   createUIMessageStream,
   convertToModelMessages,
 } from "ai"
-import { searchKnowledge, isRagAvailable } from "@/lib/rag"
+import { searchKnowledge, isRagAvailable, isCollectionSeeded } from "@/lib/rag"
 import { createSession } from "@/lib/sessions"
 import { randomUUID } from "crypto"
 
@@ -68,15 +68,20 @@ export async function POST(req: Request) {
 
   // Try RAG search
   let ragContext = ""
-  let ragAvailable = false
+  let searchSucceeded = false
+  let collectionHasData = false
   try {
-    ragAvailable = await isRagAvailable()
+    const ragAvailable = await isRagAvailable()
     if (ragAvailable && userQuery) {
-      const results = await searchKnowledge(userQuery)
-      if (results.length > 0) {
-        ragContext = results
-          .map((r) => `[Source: ${r.source}]\n${r.text}`)
-          .join("\n\n---\n\n")
+      collectionHasData = await isCollectionSeeded()
+      if (collectionHasData) {
+        const results = await searchKnowledge(userQuery)
+        searchSucceeded = true
+        if (results.length > 0) {
+          ragContext = results
+            .map((r) => `[Source: ${r.source}]\n${r.text}`)
+            .join("\n\n---\n\n")
+        }
       }
     }
   } catch (err) {
@@ -88,11 +93,12 @@ export async function POST(req: Request) {
     ? `${context.section ? context.section + " > " : ""}${context.page}`
     : undefined
 
-  // If RAG is available but returned nothing, try Discord fallback
-  if (ragAvailable && !ragContext && DISCORD_BOT_URL && userQuery) {
+  // Discord fallback: only when the knowledge base is seeded, search worked,
+  // but genuinely found nothing relevant for this question
+  if (searchSucceeded && collectionHasData && !ragContext && DISCORD_BOT_URL && userQuery) {
     try {
       const sessionId = randomUUID()
-      void createSession(sessionId, userQuery, pageContext || "")
+      createSession(sessionId, userQuery, pageContext || "").catch(() => {})
 
       await fetch(`${DISCORD_BOT_URL}/send-dm`, {
         method: "POST",
@@ -105,7 +111,6 @@ export async function POST(req: Request) {
         signal: AbortSignal.timeout(5000),
       })
 
-      // Return a static message telling the user we're checking with Chase
       const fallbackText = `I'm still learning about that topic, so I've asked Chase directly. This might take 2-3 minutes — hang tight!\n\n_Session: ${sessionId}_`
       const partId = randomUUID()
       return createUIMessageStreamResponse({

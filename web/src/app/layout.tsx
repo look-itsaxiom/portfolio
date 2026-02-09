@@ -29,10 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col antialiased`}
       >
         <SiteHeader />
-        <main className="min-h-screen">{children}</main>
+        <main className="flex flex-1 flex-col">{children}</main>
         <SiteFooter />
         <ChatWidget />
       </body>

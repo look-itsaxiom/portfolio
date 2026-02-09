@@ -1,6 +1,7 @@
 "use client"
 
 import { exhibits } from "@/data/exhibits"
+import { GlowButton } from "@/components/ui/glow-button"
 import {
   Carousel,
   CarouselContent,
@@ -9,26 +10,34 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 
+function askAxiom(title: string) {
+  window.dispatchEvent(
+    new CustomEvent("open-axiom-chat", {
+      detail: { prompt: `Tell me about ${title}` },
+    })
+  )
+}
+
 export function ExhibitCarousel() {
   return (
     <Carousel opts={{ loop: true }} className="w-full">
       <CarouselContent>
         {exhibits.map((exhibit) => (
           <CarouselItem key={exhibit.slug}>
-            <div className="rounded-2xl border border-primary/30 bg-card/60 p-8 shadow-[0_0_30px_rgba(78,245,255,0.12)]">
+            <div className="border-l-2 border-primary/40 pl-5 py-2">
               <div className="text-sm uppercase tracking-wide text-primary/80">
                 {exhibit.category}
               </div>
-              <h2 className="mt-2 text-2xl font-semibold">{exhibit.title}</h2>
-              <p className="mt-2 text-muted-foreground">{exhibit.description}</p>
-              <a
-                href={exhibit.href}
-                className="mt-4 inline-flex text-sm text-primary hover:underline"
+              <h2 className="mt-1 text-xl font-semibold">{exhibit.title}</h2>
+              <p className="mt-1 text-sm text-muted-foreground">{exhibit.description}</p>
+              <GlowButton
+                className="mt-3"
+                onClick={() => askAxiom(exhibit.title)}
               >
-                View exhibit →
-              </a>
-              <p className="mt-4 text-sm italic text-muted-foreground">
-                “{exhibit.axiomNote}”
+                Ask Axiom about this
+              </GlowButton>
+              <p className="mt-3 text-sm italic text-muted-foreground">
+                &ldquo;{exhibit.axiomNote}&rdquo;
               </p>
             </div>
           </CarouselItem>

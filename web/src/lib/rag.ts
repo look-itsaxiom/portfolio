@@ -93,6 +93,20 @@ export async function storeKnowledge(
   }
 }
 
+export async function isCollectionSeeded(): Promise<boolean> {
+  try {
+    const res = await fetch(
+      `${QDRANT_URL}/collections/${COLLECTION}`,
+      { signal: AbortSignal.timeout(3000) }
+    )
+    if (!res.ok) return false
+    const data = await res.json()
+    return (data.result?.points_count ?? 0) > 0
+  } catch {
+    return false
+  }
+}
+
 export async function isRagAvailable(): Promise<boolean> {
   try {
     const [qdrant, ollama] = await Promise.all([

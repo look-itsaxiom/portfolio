@@ -1,22 +1,18 @@
 const bubbles = [
-  "Chase led this with a small team.",
-  "Ask me about the no‑code platform.",
-  "Want the lab notes? I can pull them.",
+  { text: "Ask me about the no\u2011code platform.", top: "8%", left: "-3%" },
+  { text: "Want the lab notes? I can pull them.", top: "55%", left: "38%" },
 ]
 
 export function BubbleRing() {
   return (
-    <div className="pointer-events-none absolute inset-0 hidden md:block">
-      {bubbles.map((text, i) => (
+    <div className="pointer-events-none absolute inset-0 hidden lg:block">
+      {bubbles.map((b, i) => (
         <div
           key={i}
-          className="absolute rounded-full border border-primary/30 bg-background/70 px-4 py-2 text-xs text-muted-foreground shadow-lg"
-          style={{
-            top: `${10 + i * 25}%`,
-            left: i % 2 === 0 ? "-4%" : "78%",
-          }}
+          className="absolute rounded-full border border-primary/20 bg-background/60 px-3 py-1.5 text-xs text-muted-foreground/70"
+          style={{ top: b.top, left: b.left }}
         >
-          {text}
+          {b.text}
         </div>
       ))}
     </div>

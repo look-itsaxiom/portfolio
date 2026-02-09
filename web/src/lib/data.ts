@@ -81,9 +81,9 @@ export const heroSlides = projects.map((p) => ({
 }))
 
 export const suggestedPrompts = [
-  "What do you build best?",
+  "What does Chase build best?",
   "Tell me about the no-code integration platform.",
-  "Why build an AI-driven MMORPG?",
-  "What stack do you prefer?",
-  "What's the next thing you want to ship?",
+  "Why did Chase build an AI-driven MMORPG?",
+  "What's Chase's preferred stack?",
+  "What is Chase working on next?",
 ]
