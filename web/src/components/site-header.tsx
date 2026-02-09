@@ -8,28 +8,22 @@ export function SiteHeader() {
           Chase
         </Link>
         <nav className="flex items-center gap-6 text-sm">
-          <Link
-            href="/#impact"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
+          <Link href="/" className="text-muted-foreground transition-colors hover:text-foreground">
+            Home
+          </Link>
+          <Link href="/about" className="text-muted-foreground transition-colors hover:text-foreground">
+            About
+          </Link>
+          <Link href="/impact" className="text-muted-foreground transition-colors hover:text-foreground">
             Impact
           </Link>
-          <Link
-            href="/#labs"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
+          <Link href="/labs" className="text-muted-foreground transition-colors hover:text-foreground">
             Labs
           </Link>
-          <Link
-            href="/#devlog"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
+          <Link href="/devlog" className="text-muted-foreground transition-colors hover:text-foreground">
             DevLog
           </Link>
-          <Link
-            href="/#contact"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
+          <Link href="/contact" className="text-muted-foreground transition-colors hover:text-foreground">
             Contact
           </Link>
         </nav>
