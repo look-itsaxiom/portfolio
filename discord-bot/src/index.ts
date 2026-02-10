@@ -12,7 +12,8 @@ if (!DISCORD_BOT_TOKEN || !DISCORD_USER_ID) {
   process.exit(1)
 }
 
-// Track active questions waiting for Chase's reply
+// Track active questions waiting for Chase's reply.
+// Keyed by Discord message ID so replies are matched via "reply-to".
 const pendingQuestions = new Map<
   string,
   { sessionId: string; resolve: (reply: string) => void }
@@ -35,12 +36,30 @@ client.on(Events.MessageCreate, async (message) => {
   if (message.author.id !== DISCORD_USER_ID) return
   if (!message.channel.isDMBased()) return
 
-  // Find the oldest pending question and resolve it
-  const [key, pending] = pendingQuestions.entries().next().value ?? [null, null]
-  if (!key || !pending) return
+  // Check if Chase used "Reply" to a specific question message
+  const replyToId = message.reference?.messageId
+  if (replyToId && pendingQuestions.has(replyToId)) {
+    const pending = pendingQuestions.get(replyToId)!
+    pendingQuestions.delete(replyToId)
+    pending.resolve(message.content)
+    return
+  }
 
-  pendingQuestions.delete(key)
-  pending.resolve(message.content)
+  // Fallback: if only one question is pending, assume it's the answer
+  if (pendingQuestions.size === 1) {
+    const [key, pending] = pendingQuestions.entries().next().value!
+    pendingQuestions.delete(key)
+    pending.resolve(message.content)
+    return
+  }
+
+  // Multiple pending questions but no "reply-to" — nudge Chase
+  if (pendingQuestions.size > 1) {
+    const dmChannel = message.channel
+    await dmChannel.send(
+      `I have ${pendingQuestions.size} questions waiting — please use Discord's **Reply** feature (swipe or right-click → Reply) on the specific question you're answering so I can route it correctly.`
+    )
+  }
 })
 
 client.login(DISCORD_BOT_TOKEN)
@@ -75,20 +94,21 @@ app.post("/send-dm", async (req, res) => {
       `**Latest question:** "${question}"`,
       context ? `**Page:** ${context}` : null,
       "",
-      "Reply to this message to respond.",
+      "_Reply to this message to respond._",
     ]
       .filter(Boolean)
       .join("\n")
 
-    await dmChannel.send(formattedMessage)
+    const sentMessage = await dmChannel.send(formattedMessage)
 
-    // Wait for Chase's reply with timeout
+    // Wait for Chase's reply with timeout.
+    // Key by Discord message ID so reply-to matching works.
     const replyPromise = new Promise<string>((resolve, reject) => {
-      pendingQuestions.set(sessionId, { sessionId, resolve })
+      pendingQuestions.set(sentMessage.id, { sessionId, resolve })
 
       setTimeout(() => {
-        if (pendingQuestions.has(sessionId)) {
-          pendingQuestions.delete(sessionId)
+        if (pendingQuestions.has(sentMessage.id)) {
+          pendingQuestions.delete(sentMessage.id)
           reject(new Error("timeout"))
         }
       }, 3 * 60 * 1000)

@@ -20,14 +20,14 @@ export async function getCollectionStats() {
   }
 }
 
-export async function listPoints(offset = 0, limit = 20): Promise<{ points: QdrantPoint[]; total: number }> {
+export async function listPoints(offset: number | null = null, limit = 20): Promise<{ points: QdrantPoint[]; total: number; next_page_offset: number | null }> {
   const stats = await getCollectionStats()
 
   const res = await fetch(`${QDRANT_URL}/collections/${COLLECTION}/points/scroll`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      offset: offset > 0 ? offset : null,
+      offset,
       limit,
       with_payload: true,
       with_vector: false,
@@ -43,6 +43,7 @@ export async function listPoints(offset = 0, limit = 20): Promise<{ points: Qdra
       payload: p.payload,
     })),
     total: stats.pointsCount,
+    next_page_offset: data.result?.next_page_offset ?? null,
   }
 }
 

@@ -1,13 +1,11 @@
 import { createOpenRouter } from "@openrouter/ai-sdk-provider"
 import {
   generateText,
-  tool,
   UIMessage,
   createUIMessageStreamResponse,
   createUIMessageStream,
   convertToModelMessages,
 } from "ai"
-import { z } from "zod"
 import { searchKnowledge, isRagAvailable, isCollectionSeeded } from "@/lib/rag"
 import { createSession } from "@/lib/sessions"
 import { randomUUID } from "crypto"
@@ -40,9 +38,9 @@ Your purpose: Help people discover Chase's work through conversation.
 CRITICAL RULES:
 - You represent Chase. NEVER express your own opinions, preferences, or views.
 - ONLY state things that are documented in the provided context or the facts below.
-- If someone asks about Chase's opinions, preferences, or anything you don't have
-  documented knowledge about${hasDiscord ? ", use the askChase tool to forward the question" : ", say: \"That's a great question — I don't have that info on hand, but feel free to reach out to Chase directly.\""}.
 - Do NOT speculate, guess, or make up answers about Chase's views.
+- For questions about Chase's projects, work, stack, or anything covered in the context below: ALWAYS answer directly. You have the information — use it.
+- ${hasDiscord ? "If a visitor asks about Chase's personal opinions, feelings, or preferences that are NOT covered anywhere in the context or facts above, start your response with exactly [ASK_CHASE] (including brackets). This signals that Chase needs to answer directly. ONLY use [ASK_CHASE] for genuinely personal/subjective questions — NEVER for questions about projects, work, or tech stack that you can answer from context." : "If someone asks about Chase's personal opinions or preferences that aren't documented, say: \"That's a great question — I don't have that info on hand, but feel free to reach out to Chase directly.\""}
 
 Guidelines:
 - Be conversational and helpful
@@ -179,21 +177,6 @@ export async function POST(req: Request) {
     ? `${context.section ? context.section + " > " : ""}${context.page}`
     : undefined
 
-  // Build tools — only include askChase when Discord is configured
-  const tools = DISCORD_BOT_URL
-    ? {
-        askChase: tool({
-          description:
-            "Forward a question to Chase when you cannot answer confidently from the provided context. Use this for personal opinions, preferences, subjective questions, or anything not documented in your knowledge base.",
-          inputSchema: z.object({
-            reason: z
-              .string()
-              .describe("Brief reason why this needs Chase's input"),
-          }),
-        }),
-      }
-    : undefined
-
   const modelMessages = await convertToModelMessages(messages)
 
   const result = await generateText({
@@ -201,16 +184,25 @@ export async function POST(req: Request) {
     system: buildSystemPrompt(ragContext, pageContext),
     messages: modelMessages,
     maxOutputTokens: 250,
-    tools,
   })
 
-  // If the model called askChase, trigger Discord fallback
-  if (result.toolCalls.length > 0) {
+  const responseText = result.text || ""
+
+  // If model signaled it needs Chase's direct input, trigger Discord fallback
+  if (DISCORD_BOT_URL && responseText.startsWith("[ASK_CHASE]")) {
     return makeDiscordFallback(userQuery, pageContext, messages)
   }
 
-  // Return the model's text response
-  const text = result.text || "Hmm, I'm not sure how to answer that. Try asking me about one of Chase's projects!"
+  if (!responseText) {
+    console.warn("generateText returned empty text", {
+      query: userQuery.slice(0, 100),
+      finishReason: result.finishReason,
+      hasRag: !!ragContext,
+    })
+  }
+
+  const text = responseText.replace(/^\[ASK_CHASE\]\s*/i, "").trim()
+    || "Hmm, I'm not sure how to answer that. Try asking me about one of Chase's projects!"
   const partId = randomUUID()
   return createUIMessageStreamResponse({
     stream: createUIMessageStream({

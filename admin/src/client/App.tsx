@@ -9,6 +9,7 @@ import ContentEditPage from "./pages/ContentEditPage"
 import KnowledgeListPage from "./pages/KnowledgeListPage"
 import KnowledgeEditPage from "./pages/KnowledgeEditPage"
 import RagEntriesPage from "./pages/RagEntriesPage"
+import RagDetailPage from "./pages/RagDetailPage"
 import ProjectsPage from "./pages/ProjectsPage"
 import ExhibitsPage from "./pages/ExhibitsPage"
 import PromptsPage from "./pages/PromptsPage"
@@ -38,6 +39,7 @@ export default function App() {
             <Route path="/knowledge/*" element={<KnowledgeEditPage />} />
 
             <Route path="/rag" element={<RagEntriesPage />} />
+            <Route path="/rag/:id" element={<RagDetailPage />} />
             <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/exhibits" element={<ExhibitsPage />} />
             <Route path="/prompts" element={<PromptsPage />} />

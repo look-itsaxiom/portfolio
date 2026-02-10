@@ -185,8 +185,17 @@ export function ChatDock({ variant, suggestedPrompts = [] }: ChatDockProps) {
 
   useEffect(() => {
     function handleOpenChat(e: CustomEvent<{ prompt?: string }>) {
-      if (variant === "drawer") setOpen(true)
-      if (e.detail?.prompt) {
+      const hasPrompt = !!e.detail?.prompt
+
+      if (variant === "drawer") {
+        // Only open the drawer for generic "Ask Axiom" clicks (no prompt).
+        // When a prompt is provided (carousel), the inline variant handles it.
+        if (!hasPrompt) setOpen(true)
+        return
+      }
+
+      // Inline variant handles prompted events (carousel "Ask Axiom about this")
+      if (hasPrompt) {
         setTimeout(() => {
           sendMessage({ text: e.detail.prompt! })
         }, 200)

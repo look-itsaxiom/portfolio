@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react"
+import { useNavigate } from "react-router-dom"
 import { apiGet, apiPost, apiDelete } from "../lib/api"
 import ConfirmDialog from "../components/ConfirmDialog"
 
@@ -13,7 +14,8 @@ interface RagPoint {
 
 interface ListResult {
   points: RagPoint[]
-  next_page_offset?: number | null
+  total: number
+  next_page_offset: number | null
 }
 
 interface SearchResult {
@@ -30,12 +32,18 @@ const PAGE_SIZE = 20
 const CATEGORIES = ["professional", "labs", "meta", "general", "devlog"]
 
 export default function RagEntriesPage() {
+  const navigate = useNavigate()
   const [points, setPoints] = useState<RagPoint[]>([])
+  const [total, setTotal] = useState(0)
   const [loading, setLoading] = useState(true)
-  const [offset, setOffset] = useState(0)
-  const [hasMore, setHasMore] = useState(false)
   const [error, setError] = useState("")
   const [deleting, setDeleting] = useState<number | null>(null)
+
+  // Cursor-based pagination: track offset history for back navigation
+  const [cursorStack, setCursorStack] = useState<(number | null)[]>([null])
+  const [nextCursor, setNextCursor] = useState<number | null>(null)
+
+  const currentPage = cursorStack.length - 1
 
   // Add entry form
   const [newText, setNewText] = useState("")
@@ -48,12 +56,16 @@ export default function RagEntriesPage() {
   const [searchResults, setSearchResults] = useState<SearchResult[] | null>(null)
   const [searching, setSearching] = useState(false)
 
-  const fetchPoints = useCallback(async (off: number) => {
+  const fetchPoints = useCallback(async (cursor: number | null) => {
     setLoading(true)
     try {
-      const result = await apiGet<ListResult>(`/api/rag/entries?offset=${off}&limit=${PAGE_SIZE}`)
+      const url = cursor != null
+        ? `/api/rag/entries?offset=${cursor}&limit=${PAGE_SIZE}`
+        : `/api/rag/entries?limit=${PAGE_SIZE}`
+      const result = await apiGet<ListResult>(url)
       setPoints(result.points ?? [])
-      setHasMore(result.next_page_offset != null)
+      setTotal(result.total ?? 0)
+      setNextCursor(result.next_page_offset)
       setError("")
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load")
@@ -63,15 +75,27 @@ export default function RagEntriesPage() {
   }, [])
 
   useEffect(() => {
-    fetchPoints(offset)
-  }, [offset, fetchPoints])
+    const currentCursor = cursorStack[cursorStack.length - 1]
+    fetchPoints(currentCursor)
+  }, [cursorStack, fetchPoints])
+
+  function handleNextPage() {
+    if (nextCursor == null) return
+    setCursorStack((prev) => [...prev, nextCursor])
+  }
+
+  function handlePrevPage() {
+    if (cursorStack.length <= 1) return
+    setCursorStack((prev) => prev.slice(0, -1))
+  }
 
   async function handleDelete() {
     if (deleting === null) return
     try {
       await apiDelete(`/api/rag/entries/${deleting}`)
       setDeleting(null)
-      fetchPoints(offset)
+      const currentCursor = cursorStack[cursorStack.length - 1]
+      fetchPoints(currentCursor)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Delete failed")
     }
@@ -89,7 +113,8 @@ export default function RagEntriesPage() {
       setNewText("")
       setNewSource("")
       setNewCategory("general")
-      fetchPoints(offset)
+      const currentCursor = cursorStack[cursorStack.length - 1]
+      fetchPoints(currentCursor)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Add failed")
     } finally {
@@ -116,6 +141,10 @@ export default function RagEntriesPage() {
   function truncate(text: string, len: number): string {
     return text.length > len ? text.slice(0, len) + "..." : text
   }
+
+  const pageStart = currentPage * PAGE_SIZE + 1
+  const pageEnd = Math.min(pageStart + points.length - 1, total)
+  const totalPages = Math.ceil(total / PAGE_SIZE)
 
   return (
     <div className="p-6 space-y-6">
@@ -194,7 +223,8 @@ export default function RagEntriesPage() {
             {searchResults.map((r) => (
               <div
                 key={r.id}
-                className="border border-zinc-700 rounded p-3 text-sm"
+                onClick={() => navigate(`/rag/${r.id}`)}
+                className="border border-zinc-700 rounded p-3 text-sm cursor-pointer hover:bg-zinc-800/50 transition-colors"
               >
                 <div className="flex justify-between items-start mb-1">
                   <span className="text-zinc-400 text-xs">
@@ -204,7 +234,7 @@ export default function RagEntriesPage() {
                     {r.payload?.source} / {r.payload?.category}
                   </span>
                 </div>
-                <p className="text-zinc-200">{r.payload?.text}</p>
+                <p className="text-zinc-200">{truncate(r.payload?.text ?? "", 150)}</p>
               </div>
             ))}
           </div>
@@ -228,7 +258,11 @@ export default function RagEntriesPage() {
             </thead>
             <tbody>
               {points.map((pt) => (
-                <tr key={pt.id} className="border-b border-zinc-800/50">
+                <tr
+                  key={pt.id}
+                  onClick={() => navigate(`/rag/${pt.id}`)}
+                  className="border-b border-zinc-800/50 hover:bg-zinc-900/50 cursor-pointer transition-colors"
+                >
                   <td className="py-3 text-zinc-400 font-mono text-xs">{pt.id}</td>
                   <td className="py-3 text-zinc-200">
                     {truncate(pt.payload?.text ?? "", 80)}
@@ -237,7 +271,10 @@ export default function RagEntriesPage() {
                   <td className="py-3 text-zinc-400 text-xs">{pt.payload?.category}</td>
                   <td className="py-3">
                     <button
-                      onClick={() => setDeleting(pt.id)}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setDeleting(pt.id)
+                      }}
                       className="text-xs text-red-400 hover:text-red-300 transition-colors"
                     >
                       Delete
@@ -253,23 +290,25 @@ export default function RagEntriesPage() {
           )}
 
           {/* Pagination */}
-          <div className="flex gap-2">
+          <div className="flex items-center gap-3">
             <button
-              disabled={offset === 0}
-              onClick={() => setOffset(Math.max(0, offset - PAGE_SIZE))}
+              disabled={currentPage === 0}
+              onClick={handlePrevPage}
               className="px-3 py-1.5 text-sm bg-zinc-800 hover:bg-zinc-700 disabled:opacity-30 text-zinc-300 rounded transition-colors"
             >
               Previous
             </button>
             <button
-              disabled={!hasMore}
-              onClick={() => setOffset(offset + PAGE_SIZE)}
+              disabled={nextCursor == null}
+              onClick={handleNextPage}
               className="px-3 py-1.5 text-sm bg-zinc-800 hover:bg-zinc-700 disabled:opacity-30 text-zinc-300 rounded transition-colors"
             >
               Next
             </button>
-            <span className="text-xs text-zinc-500 self-center">
-              Offset: {offset}
+            <span className="text-xs text-zinc-500">
+              {total > 0
+                ? `Showing ${pageStart}–${pageEnd} of ${total} entries (page ${currentPage + 1} of ${totalPages})`
+                : "No entries"}
             </span>
           </div>
         </>

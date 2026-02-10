@@ -16,7 +16,8 @@ ragRouter.get("/stats", async (_req, res) => {
 
 ragRouter.get("/entries", async (req, res) => {
   try {
-    const offset = parseInt(String(req.query.offset || "0"), 10)
+    const offsetRaw = req.query.offset
+    const offset = offsetRaw ? parseInt(String(offsetRaw), 10) : null
     const limit = Math.min(parseInt(String(req.query.limit || "20"), 10), 100)
     const result = await listPoints(offset, limit)
     res.json(result)
