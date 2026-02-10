@@ -5,9 +5,11 @@ role: "Lead developer + designer (with a small team)"
 impact:
   - "Cut onboarding timelines from weeks to days."
   - "Enabled admins to configure schemas + transformations without engineering."
-  - "Established foundation for API‑driven workflows."
-stack: ["Angular", "TypeScript", ".NET", "PostgreSQL"]
+  - "Enabled API‑based integrations via the No Code API (beyond file‑based)."
+stack: ["Angular", "TypeScript", ".NET", "SQL Server", "Azure Logic Apps"]
 tags: ["impact", "integrations", "platform"]
 ---
 
-Partner data arrived in every shape imaginable. Instead of burning sprints on one‑off mappings, Chase and team built a no‑code integration system that let admins define schemas and transformations through UI. The work started with file‑based inputs, expanded into timeclock and payroll integrations, and paved the path for API‑driven workflows. The result: onboarding went from “schedule a sprint” to “ship it this week.”
+Partner data arrived in every shape imaginable. Instead of burning sprints on one‑off mappings, Chase and team built a **full‑stack** no‑code capability inside the back‑of‑house admin app — not just a UI. It started with **file‑based timeclock** integrations, expanded to **file‑based payroll**, and then grew a richer transformation system so more integrations could be delivered via no‑code instead of engineering.
+
+Most recently, the team shipped the **No Code API**, which enables **API‑based** timeclock and payroll integrations (not just file uploads). Azure Logic Apps powers that API‑driven flow.

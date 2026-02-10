@@ -9,11 +9,11 @@ Working with a small team, Chase helped deliver:
 - **Internal tooling improvements:** Streamlined admin dashboards and internal workflows
 - **Design system adoption:** Helped the team adopt and extend a shared component library
 - **Strangler-pattern modernization:** Incrementally migrated legacy codebase modules without big-bang rewrites
-- **Accessibility improvements:** WCAG compliance work across admin surfaces
-- **Performance optimization:** Bundle analysis, lazy loading, render optimization
+- **Accessibility improvements:** WCAG compliance work on the **user-facing product website**
+- **Performance optimization:** Bundle analysis, lazy loading, and render optimization for the **user-facing product website**
 
 ## Technical Details
-- **Stack:** TypeScript, React, Node.js
+- **Stack:** TypeScript, React, .NET, Azure Cosmos DB
 - **Design systems:** Component library adoption and contribution
 - **Architecture pattern:** Strangler fig — wrap legacy modules, replace incrementally
 - **Cross-functional:** Worked with design, product, and QA teams

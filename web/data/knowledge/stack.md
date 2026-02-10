@@ -7,6 +7,7 @@
 ## Frontend
 - React (hooks, context, custom hooks)
 - Next.js (App Router, SSR, SSG, API routes)
+- Angular (professional work)
 - Tailwind CSS
 - shadcn/ui
 - Design systems (building and adopting component libraries)
@@ -16,8 +17,11 @@
 ## Backend
 - Node.js
 - Express
+- .NET (professional work)
 - REST API design
 - PostgreSQL
+- SQL Server (professional work)
+- Azure (Logic Apps, Cosmos DB — professional work)
 - AWS (cloud infrastructure)
 
 ## AI & Agent Systems

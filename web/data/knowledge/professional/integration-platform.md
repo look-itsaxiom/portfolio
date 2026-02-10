@@ -4,15 +4,16 @@
 Partner data arrived in every shape imaginable. Onboarding new integrations required scheduling entire sprints for one-off data mappings — a bottleneck that slowed partner activation.
 
 ## The Solution
-Chase led a small team building a no-code integration system that lets admins define schemas and transformations through a visual UI. Instead of writing custom code for each partner, the platform abstracts the complexity into configurable workflows.
+Chase led a small team building a **full-stack** no-code capability inside the back-of-house admin app. Instead of writing custom code for each partner, admins could define schemas and transformations through a visual UI.
 
 ## Technical Approach
-- **Stack:** Angular, TypeScript, .NET, PostgreSQL
+- **Stack:** Angular, TypeScript, .NET, SQL Server, Azure Logic Apps
 - **Architecture:** Modular backend with pluggable data source adapters
 - **Frontend:** Admin UI for schema definition, field mapping, and transformation rules
-- Started with file-based inputs (CSV, Excel)
-- Expanded to timeclock and payroll system integrations
-- Laid foundation for API-based no-code integration via workflow automation
+- Started with **file-based timeclock** integrations
+- Expanded to **file-based payroll** integrations
+- Grew a richer transformation system so more integrations could be delivered via no-code
+- Shipped the **No Code API** to enable **API-based** timeclock and payroll integrations (powered by Azure Logic Apps)
 
 ## Impact
 - Onboarding went from "schedule a sprint" to "ship it this week"

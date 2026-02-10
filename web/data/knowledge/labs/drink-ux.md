@@ -14,7 +14,7 @@ A multi-app SaaS platform with a visual drink builder that customers interact wi
 - **PWA:** Installable progressive web app for mobile ordering
 
 ## Current Status
-Pre-demo. The frontend drink builder is mostly complete and demo-able. POS integrations are work in progress. The biggest missing piece is time, not the core idea.
+Actively in development. The frontend drink builder is demo-able and POS integrations are being built out.
 
 ## What Makes This Interesting
 The insight is that coffee shops want modern ordering UX but can't afford to switch POS systems. Drink-UX bridges that gap — it's an adapter pattern applied to the real world. The multi-app architecture shows systems thinking beyond a single user interface.
