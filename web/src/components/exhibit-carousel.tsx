@@ -106,7 +106,7 @@ export function ExhibitCarousel({ exhibits }: { exhibits: Exhibit[] }) {
     <div className="w-full space-y-4">
       <Carousel
         opts={{ loop: true }}
-        plugins={[Autoplay({ delay: 7000, stopOnInteraction: true })]}
+        plugins={[Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true })]}
         setApi={setApi}
         className="w-full"
       >
