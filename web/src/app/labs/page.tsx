@@ -5,8 +5,8 @@ export default function LabsIndexPage() {
   const labs = getAllLabs()
 
   return (
-    <section className="mx-auto max-w-5xl px-6 py-16">
-      <h1 className="text-4xl font-semibold">Labs</h1>
+    <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
+      <h1 className="text-3xl font-semibold sm:text-4xl">Labs</h1>
       <p className="mt-3 text-muted-foreground">
         Experiments, playful prototypes, and AI-native interfaces in progress.
       </p>

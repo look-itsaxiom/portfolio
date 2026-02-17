@@ -18,7 +18,7 @@ export default function DevlogDetailPage({ params }: { params: { slug?: string }
   const paragraphs = entry.content.trim().split(/\n\n+/)
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-20">
+    <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6">
       <Link
         href="/devlog"
         className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
@@ -32,7 +32,7 @@ export default function DevlogDetailPage({ params }: { params: { slug?: string }
         <span className="text-xs text-muted-foreground">{entry.date}</span>
       </div>
 
-      <h1 className="mt-4 text-4xl font-bold tracking-tight">{entry.title}</h1>
+      <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{entry.title}</h1>
       <p className="mt-3 text-xl text-muted-foreground">{entry.summary}</p>
 
       {entry.tags?.length ? (

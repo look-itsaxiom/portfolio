@@ -139,11 +139,11 @@ export function ExhibitCarousel({ exhibits }: { exhibits: Exhibit[] }) {
 
       {/* Mascot with speech bubble */}
       <div className="flex items-start gap-3">
-        <pre className="shrink-0 leading-4 text-xs text-primary">
+        <pre className="hidden shrink-0 leading-4 text-xs text-primary sm:block">
           {mascotArt.join("\n")}
         </pre>
         <div className="relative mt-1 min-w-0 flex-1 rounded-lg border border-primary/30 bg-card/30 px-3 py-2">
-          <div className="absolute left-0 top-3 -translate-x-full border-y-[6px] border-r-[6px] border-y-transparent border-r-primary/30" />
+          <div className="absolute left-0 top-3 -translate-x-full border-y-[6px] border-r-[6px] border-y-transparent border-r-primary/30 hidden sm:block" />
           <p className="min-h-[2.5rem] text-sm italic text-muted-foreground">
             {displayedText}
             {isTyping && (
