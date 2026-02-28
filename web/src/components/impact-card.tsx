@@ -4,7 +4,7 @@ import type { ImpactEntry } from "@/lib/content"
 
 export function ImpactCard({ entry }: { entry: ImpactEntry }) {
   return (
-    <div className="rounded-2xl border border-border/40 bg-card/50 p-6">
+    <div className="rounded-xl border border-border/40 bg-card/50 p-4 sm:rounded-2xl sm:p-6">
       <Badge className="mb-3">Impact</Badge>
       <h3 className="text-xl font-semibold">{entry.title}</h3>
       <p className="mt-2 text-muted-foreground">{entry.summary}</p>

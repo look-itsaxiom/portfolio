@@ -1,7 +1,7 @@
 const QDRANT_URL = process.env.QDRANT_URL || "http://localhost:6333"
-const OLLAMA_URL = process.env.OLLAMA_URL || "http://localhost:11434"
 const COLLECTION = process.env.QDRANT_COLLECTION || "ask-axiom-knowledge"
-const EMBED_MODEL = process.env.OLLAMA_MODEL || "nomic-embed-text"
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || ""
+const EMBED_MODEL = process.env.EMBED_MODEL || "gemini-embedding-001"
 const SIMILARITY_THRESHOLD = 0.65
 
 export interface RagResult {
@@ -11,19 +11,22 @@ export interface RagResult {
 }
 
 export async function getEmbedding(text: string): Promise<number[]> {
-  const res = await fetch(`${OLLAMA_URL}/api/embed`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ model: EMBED_MODEL, input: text }),
-    signal: AbortSignal.timeout(10000),
-  })
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${EMBED_MODEL}:embedContent?key=${GEMINI_API_KEY}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content: { parts: [{ text }] } }),
+      signal: AbortSignal.timeout(10000),
+    }
+  )
 
   if (!res.ok) {
-    throw new Error(`Ollama embedding failed: ${res.status}`)
+    throw new Error(`Gemini embedding failed: ${res.status} ${await res.text()}`)
   }
 
   const data = await res.json()
-  return data.embeddings[0]
+  return data.embedding.values
 }
 
 export async function searchKnowledge(
@@ -109,11 +112,11 @@ export async function isCollectionSeeded(): Promise<boolean> {
 
 export async function isRagAvailable(): Promise<boolean> {
   try {
-    const [qdrant, ollama] = await Promise.all([
-      fetch(`${QDRANT_URL}/collections`, { signal: AbortSignal.timeout(3000) }),
-      fetch(`${OLLAMA_URL}/api/tags`, { signal: AbortSignal.timeout(3000) }),
-    ])
-    return qdrant.ok && ollama.ok
+    if (!GEMINI_API_KEY) return false
+    const qdrant = await fetch(`${QDRANT_URL}/collections`, {
+      signal: AbortSignal.timeout(3000),
+    })
+    return qdrant.ok
   } catch {
     return false
   }

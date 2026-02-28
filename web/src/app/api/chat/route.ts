@@ -1,4 +1,4 @@
-import { createOpenRouter } from "@openrouter/ai-sdk-provider"
+import { createGoogleGenerativeAI } from "@ai-sdk/google"
 import {
   generateText,
   UIMessage,
@@ -10,11 +10,11 @@ import { searchKnowledge, isRagAvailable, isCollectionSeeded } from "@/lib/rag"
 import { createSession } from "@/lib/sessions"
 import { randomUUID } from "crypto"
 
-const openrouter = createOpenRouter({
-  apiKey: process.env.OPENROUTER_API_KEY,
+const google = createGoogleGenerativeAI({
+  apiKey: process.env.GEMINI_API_KEY,
 })
 
-const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || "arcee-ai/trinity-large-preview:free"
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash"
 const DISCORD_BOT_URL = process.env.DISCORD_BOT_URL
 
 function buildSystemPrompt(ragContext: string, pageContext?: string): string {
@@ -180,7 +180,7 @@ export async function POST(req: Request) {
   const modelMessages = await convertToModelMessages(messages)
 
   const result = await generateText({
-    model: openrouter(OPENROUTER_MODEL),
+    model: google(GEMINI_MODEL),
     system: buildSystemPrompt(ragContext, pageContext),
     messages: modelMessages,
     maxOutputTokens: 250,

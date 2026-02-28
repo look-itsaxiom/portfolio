@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chase Skibeness — Resume</title>
+<style>
+  @page {
+    size: letter;
+    margin: 0.5in 0.6in;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+    font-size: 9.5pt;
+    line-height: 1.4;
+    color: #1a1a1a;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    padding: 0.5in 0.6in;
+    margin: 0 auto;
+  }
+
+  @media print {
+    .page {
+      padding: 0;
+      margin: 0;
+      min-height: auto;
+    }
+    .page-break {
+      page-break-before: always;
+    }
+  }
+
+  @media screen {
+    body { background: #e8e8e8; }
+    .page {
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      margin: 20px auto;
+    }
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1.5px solid #2a2a2a;
+  }
+
+  .header h1 {
+    font-size: 20pt;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #111;
+    margin-bottom: 4px;
+  }
+
+  .header .contact {
+    font-size: 9pt;
+    color: #444;
+  }
+
+  .header .contact a {
+    color: #444;
+    text-decoration: none;
+  }
+
+  .header .contact span.sep {
+    margin: 0 6px;
+    color: #999;
+  }
+
+  /* Section headers */
+  h2 {
+    font-size: 10.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #2a2a2a;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 2px;
+    margin-top: 14px;
+    margin-bottom: 8px;
+  }
+
+  /* Summary */
+  .summary {
+    font-size: 9.5pt;
+    line-height: 1.45;
+    color: #222;
+    margin-bottom: 2px;
+  }
+
+  /* Job entries */
+  .job {
+    margin-bottom: 10px;
+  }
+
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1px;
+  }
+
+  .job-title {
+    font-weight: 700;
+    font-size: 10pt;
+    color: #111;
+  }
+
+  .job-date {
+    font-size: 8.5pt;
+    color: #555;
+    font-style: italic;
+    white-space: nowrap;
+  }
+
+  .job-context {
+    font-size: 9pt;
+    color: #444;
+    font-style: italic;
+    margin-bottom: 4px;
+    line-height: 1.35;
+  }
+
+  ul {
+    padding-left: 16px;
+    margin-bottom: 2px;
+  }
+
+  li {
+    margin-bottom: 3px;
+    font-size: 9.5pt;
+    line-height: 1.4;
+  }
+
+  /* Project entries */
+  .project {
+    margin-bottom: 8px;
+  }
+
+  .project-title {
+    font-weight: 700;
+    font-size: 9.5pt;
+    color: #111;
+  }
+
+  .project-subtitle {
+    font-weight: 400;
+    color: #555;
+    font-style: italic;
+  }
+
+  .project-desc {
+    font-size: 9pt;
+    line-height: 1.4;
+    color: #222;
+    margin-top: 1px;
+  }
+
+  /* Skills */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    row-gap: 3px;
+    font-size: 9pt;
+  }
+
+  .skills-label {
+    font-weight: 700;
+    color: #333;
+  }
+
+  .skills-value {
+    color: #222;
+  }
+
+  /* Education */
+  .education {
+    font-size: 9.5pt;
+  }
+
+  .education strong {
+    font-weight: 700;
+  }
+
+  /* Compact helper */
+  .compact {
+    font-size: 9pt;
+    color: #333;
+    line-height: 1.4;
+  }
+
+  .inline-projects {
+    font-size: 9pt;
+    color: #333;
+    line-height: 1.4;
+    margin-top: 4px;
+  }
+
+  .oss-list {
+    padding-left: 16px;
+  }
+
+  .oss-list li {
+    font-size: 9pt;
+    margin-bottom: 2px;
+  }
+
+  .oss-list strong {
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<div class="page">
+
+  <div class="header">
+    <h1>Chase Skibeness</h1>
+    <div class="contact">
+      Lynnwood, WA<span class="sep">|</span>chaseskibbs@gmail.com<span class="sep">|</span>(425) 275-2776<span class="sep">|</span><a href="https://linkedin.com/in/chase-skibeness">linkedin.com/in/chase-skibeness</a><span class="sep">|</span><a href="https://github.com/look-itsaxiom">github.com/look-itsaxiom</a>
+    </div>
+  </div>
+
+  <h2>Summary</h2>
+  <p class="summary">
+    Windows-native software engineer with 5+ years of experience building CLI applications, developer tools, and AI-powered systems. Built a Claude Code plugin that orchestrates multi-agent workflows across specialized departments and external AI engines — developed and tested entirely on Windows. Architected a no-code integration platform at a company with 250+ payroll and timeclock integrations. Career started in PowerShell automation and Windows systems administration — studied during paternity leave, transitioned to engineering, promoted within 6 months. Prolific builder with 40+ repositories focused on LLM orchestration, CLI developer tools, and Windows system automation.
+  </p>
+
+  <h2>Developer Tools</h2>
+
+  <div class="project">
+    <div class="project-title">Dream Factory <span class="project-subtitle">— Claude Code Plugin</span></div>
+    <p class="project-desc">
+      A multi-agent software studio that turns a single Claude Code session into a coordinated production environment. Departments (engineering, art/design, R&D, game development) provide specialized toolsets and instructions to agent teams. Features external engine dispatch to Codex CLI and Gemini CLI, project lifecycle management, and a skill/hook architecture. Built in TypeScript, Python, and Shell on Windows.
+    </p>
+  </div>
+
+  <div class="project">
+    <div class="project-title">Git Flow Training Tool <span class="project-subtitle">— AI-Powered Developer Education</span></div>
+    <p class="project-desc">
+      Built a Reveal.js presentation with a live AI Q&A system where audience members submit questions answered in real-time by an LLM. Extended with Edge TTS narration — the AI delivers the entire presentation and reads Q&A responses aloud. Used to train engineering teams at Tapcheck, rolling out company-wide. Node.js, Edge TTS, ElevenLabs.
+    </p>
+  </div>
+
+  <h2>Experience</h2>
+
+  <div class="job">
+    <div class="job-header">
+      <span class="job-title">Software Engineer — Tapcheck</span>
+      <span class="job-date">September 2024 – Present</span>
+    </div>
+    <p class="job-context">Earned wage access platform. My team owns the multi-tenant integration system connecting to 250+ payroll and timeclock partner systems.</p>
+    <ul>
+      <li>Designed and built "No Code," an internal platform enabling business users to configure payroll data integrations without engineering — eliminated a 2-week SDLC dependency per integration across partnerships including ADP, Workday, Dayforce, and Viventium Express</li>
+      <li>Built configurable transformation tools (string manipulation, data mapping) so admins could handle edge cases that previously required hardcoded solutions</li>
+      <li>Extended No Code to API-based integrations using Azure Logic Apps, expanding coverage from file-based CSV ingestion to full API-driven integration support</li>
+      <li>Built an internal AI chatbot on Microsoft Teams using Node.js for organizational knowledge management, reducing tribal knowledge drift</li>
+      <li>Introduced Git Flow, improved CI/CD pipeline efficiency (split pre/post-merge tasks), and built ephemeral QA environments — all without dedicated DevOps support</li>
+      <li>Primary technical designer on a 6-person team; responsible for architecture, implementation, and code review including offshore engineers</li>
+      <li>Use Claude Code as primary CLI development tool for feature implementation, bug fixes, and architecture planning</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <div class="job-header">
+      <span class="job-title">Software Developer 2 — Limeade / WebMD</span>
+      <span class="job-date">August 2022 – September 2024</span>
+    </div>
+    <p class="job-context">Full-stack agile team — .NET Core microservices backend with React micro frontends. Promoted within 8 months.</p>
+    <ul>
+      <li>Led greenfield rebuild of internal admin portal, replacing legacy .NET/Knockout.js/jQuery stack with React — entrusted with full technical ownership</li>
+      <li>Broke features out of a mid-strangler-pattern monolith into proper microservices, improving frontend load times by 75–115%</li>
+      <li>Drove cross-functional adoption of PrimeReact design system across engineering and UX teams, solving the disconnect between Figma handoffs and frontend reality</li>
+      <li>Built Azure Durable Functions for event-driven activity tracking, decoupling high-frequency operations from the main service layer</li>
+      <li>Automated developer environment setup to a single-command script, reducing new engineer onboarding time</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- PAGE 2 -->
+<div class="page page-break">
+
+  <div class="job">
+    <div class="job-header">
+      <span class="job-title">Software Developer — Limeade</span>
+      <span class="job-date">January 2022 – August 2022</span>
+    </div>
+    <p class="job-context">Transitioned from IT after the Director of Engineering noticed my scripting and automation work. Studied JavaScript, Ruby, and Python during paternity leave. Promoted within 8 months for consistently contributing at mid-level pace.</p>
+    <ul>
+      <li>Enhanced internal admin tool UX with data validation, microinteractions, and custom components</li>
+      <li>Contributed to WCAG AA accessibility compliance across the React frontend</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <div class="job-header">
+      <span class="job-title">IT Support Specialist / Systems Administrator — Limeade</span>
+      <span class="job-date">March 2020 – January 2022</span>
+    </div>
+    <p class="job-context">De facto systems administrator. Managed Windows and macOS environments for the organization.</p>
+    <ul>
+      <li>Engineered 12+ PowerShell and shell CLI tools used daily by a 5-person support team — automated laptop provisioning (Windows AutoPilot), macOS deployment (Jamf), password resets, inventory management, and Zendesk ticket handling</li>
+      <li>Built serverless Azure Function API endpoints to eliminate manual support tasks, saving an estimated 15+ hours of specialist labor per week</li>
+      <li>Administered Hybrid Azure AD, Intune MDM, and Office 365 environments across Windows and macOS</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <div class="job-header">
+      <span class="job-title">IT Helpdesk — Groupon / HD Fowler Company</span>
+      <span class="job-date">October 2017 – March 2020</span>
+    </div>
+    <p class="job-context compact">Zendesk automation, Active Directory administration, ERP system management. Early career roles where scripting and automation became daily habits, laying the foundation for the transition to software engineering.</p>
+  </div>
+
+  <h2>Open Source &amp; Additional Projects</h2>
+
+  <div class="project">
+    <div class="project-title">Open Source Contributions</div>
+    <ul class="oss-list">
+      <li><strong>comfyui-mcp-server:</strong> Fixed 5 MCP server bugs with tests, fixed 4 pre-existing Windows test failures, added CI pipeline</li>
+      <li><strong>layer-ai-mcp:</strong> Built from scratch — 10-tool MCP server wrapping the Layer.ai GraphQL API for AI image generation</li>
+    </ul>
+  </div>
+
+  <div class="project">
+    <div class="project-title">Millennium: The Living Duel <span class="project-subtitle">— AI-Arbitrated Card Game</span></div>
+    <p class="project-desc">665+ tests, Docker deployment (API + Client + Qdrant). Players argue card interpretations; an LLM arbiter adjudicates and builds precedent. TypeScript, Fastify, React, WebSocket multiplayer.</p>
+  </div>
+
+  <div class="project">
+    <div class="project-title">ClawCraft.ai <span class="project-subtitle">— AI Agents as Game Players</span></div>
+    <p class="project-desc">MMORPG where AI agents learn game systems via discoverable skill files delivered through curl. Explores documentation-as-interface for AI agent interaction. TypeScript, Fastify, MongoDB. Live at clawcraft.world.</p>
+  </div>
+
+  <div class="project">
+    <div class="project-title">Ask Axiom <span class="project-subtitle">— RAG-Powered Portfolio Curator</span></div>
+    <p class="project-desc">AI chat widget embedded in my portfolio site that answers questions about my work using retrieval-augmented generation. Gemini for chat, Qdrant vector search, Discord bot fallback for questions it can't answer. Self-hosted on a homelab Docker stack. Next.js, Express, Docker Compose.</p>
+  </div>
+
+  <p class="inline-projects">
+    <strong>Additional:</strong> FlowNote — notepad with inline calculations (222 tests) &#x2022; 15+ game prototypes across Unity, Godot, and Phaser 3
+  </p>
+
+  <h2>Skills</h2>
+  <div class="skills-grid">
+    <span class="skills-label">Languages</span>
+    <span class="skills-value">TypeScript, JavaScript, C#, Python, PowerShell, Ruby</span>
+    <span class="skills-label">CLI &amp; Dev Tools</span>
+    <span class="skills-value">Claude Code (daily driver + plugin author), Windows Terminal, WSL, winget, Git Flow, Edge TTS</span>
+    <span class="skills-label">Backend &amp; Runtime</span>
+    <span class="skills-value">Node.js (Express, Fastify, NestJS), Bun, .NET Core, REST &amp; GraphQL API design, microservices</span>
+    <span class="skills-label">Cloud &amp; DevOps</span>
+    <span class="skills-value">Azure (AD, Functions, Logic Apps, DevOps, Service Bus, App Services, Key Vault), Docker, CI/CD</span>
+    <span class="skills-label">AI &amp; LLM</span>
+    <span class="skills-value">MCP Protocol (server author), RAG (Qdrant + Gemini Embeddings), multi-model orchestration, Prompt Engineering, Vercel AI SDK</span>
+    <span class="skills-label">Frontend</span>
+    <span class="skills-value">React, Angular, Next.js, Tailwind CSS, Ionic/Capacitor</span>
+    <span class="skills-label">Windows &amp; Infra</span>
+    <span class="skills-value">AutoPilot, Intune MDM, Jamf, Hybrid Azure AD, MSVC/CMake/Ninja, self-hosted Docker (15+ services)</span>
+  </div>
+
+  <h2>Education</h2>
+  <p class="education">
+    <strong>B.S. Information Technology Management</strong> — Western Governors University <em>(2017 – 2021)</em>
+  </p>
+
+</div>
+
+</body>
+</html>

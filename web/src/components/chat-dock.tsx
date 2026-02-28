@@ -210,7 +210,7 @@ export function ChatDock({ variant, suggestedPrompts = [] }: ChatDockProps) {
     return (
       <Button
         size="lg"
-        className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full shadow-lg opacity-50 cursor-not-allowed"
+        className="fixed bottom-4 right-4 z-50 h-12 w-12 rounded-full shadow-lg sm:bottom-6 sm:right-6 sm:h-14 sm:w-14 opacity-50 cursor-not-allowed"
         disabled
         title="Chat is currently unavailable"
       >
@@ -358,7 +358,7 @@ export function ChatDock({ variant, suggestedPrompts = [] }: ChatDockProps) {
 
   if (variant === "inline") {
     return (
-      <div className="flex h-[600px] flex-col rounded-2xl border border-primary/20 bg-card/50 shadow-[0_0_30px_rgba(139,92,246,0.12)]">
+      <div className="flex h-[420px] flex-col rounded-2xl border border-primary/20 bg-card/50 shadow-[0_0_30px_rgba(139,92,246,0.12)] sm:h-[500px] lg:h-[600px]">
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden">{ChatPanel}</div>
       </div>
     )
@@ -367,7 +367,7 @@ export function ChatDock({ variant, suggestedPrompts = [] }: ChatDockProps) {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button size="lg" className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full shadow-lg">
+        <Button size="lg" className="fixed bottom-4 right-4 z-50 h-12 w-12 rounded-full shadow-lg sm:bottom-6 sm:right-6 sm:h-14 sm:w-14">
           {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
         </Button>
       </SheetTrigger>

@@ -2,9 +2,9 @@ import { readFileSync, readdirSync, statSync } from "fs"
 import { join, relative } from "path"
 
 const QDRANT_URL = process.env.QDRANT_URL || "http://home.skib:6333"
-const OLLAMA_URL = process.env.OLLAMA_URL || "http://home.skib:11434"
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || ""
 const COLLECTION = process.env.QDRANT_COLLECTION || "ask-axiom-knowledge"
-const EMBED_MODEL = process.env.OLLAMA_MODEL || "nomic-embed-text"
+const EMBED_MODEL = process.env.EMBED_MODEL || "gemini-embedding-001"
 
 interface KnowledgeChunk {
   text: string
@@ -70,18 +70,21 @@ function sourceFromPath(filePath: string, knowledgeDir: string): string {
 }
 
 async function getEmbedding(text: string): Promise<number[]> {
-  const res = await fetch(`${OLLAMA_URL}/api/embed`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ model: EMBED_MODEL, input: text }),
-  })
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${EMBED_MODEL}:embedContent?key=${GEMINI_API_KEY}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content: { parts: [{ text }] } }),
+    }
+  )
 
   if (!res.ok) {
-    throw new Error(`Ollama embedding failed: ${res.status} ${await res.text()}`)
+    throw new Error(`Gemini embedding failed: ${res.status} ${await res.text()}`)
   }
 
   const data = await res.json()
-  return data.embeddings[0]
+  return data.embedding.values
 }
 
 async function ensureCollection(dimension: number) {

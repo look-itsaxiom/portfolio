@@ -4,7 +4,7 @@ import type { DevlogEntry } from "@/lib/content"
 
 export function DevlogCard({ entry }: { entry: DevlogEntry }) {
   return (
-    <div className="rounded-2xl border border-border/40 bg-card/50 p-6">
+    <div className="rounded-xl border border-border/40 bg-card/50 p-4 sm:rounded-2xl sm:p-6">
       <div className="flex items-center justify-between">
         <Badge variant="outline">DevLog</Badge>
         <span className="text-xs text-muted-foreground">{entry.date}</span>

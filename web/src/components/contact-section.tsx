@@ -2,8 +2,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export function ContactSection() {
   return (
-    <section id="contact" className="py-20">
-      <div className="mx-auto max-w-5xl px-6">
+    <section id="contact" className="py-12 sm:py-20">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <Card className="mx-auto max-w-xl text-center">
           <CardHeader>
             <CardTitle className="text-2xl">

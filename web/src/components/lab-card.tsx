@@ -4,7 +4,7 @@ import type { LabEntry } from "@/lib/content"
 
 export function LabCard({ entry }: { entry: LabEntry }) {
   return (
-    <div className="rounded-2xl border border-border/40 bg-card/50 p-6">
+    <div className="rounded-xl border border-border/40 bg-card/50 p-4 sm:rounded-2xl sm:p-6">
       <Badge variant="secondary" className="mb-3">
         Labs
       </Badge>

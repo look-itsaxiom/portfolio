@@ -10,6 +10,7 @@
     "seed": "tsx scripts/seed-knowledge.ts"
   },
   "dependencies": {
+    "@ai-sdk/google": "^3.0.34",
     "@ai-sdk/openai": "^3.0.26",
     "@ai-sdk/react": "^3.0.79",
     "@openrouter/ai-sdk-provider": "^2.1.1",

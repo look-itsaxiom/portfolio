@@ -2,15 +2,14 @@ import { NextResponse } from "next/server"
 
 export async function GET() {
   const checks: Record<string, "ok" | "error" | "unconfigured"> = {
-    openrouter: "unconfigured",
+    gemini: "unconfigured",
     qdrant: "unconfigured",
-    ollama: "unconfigured",
     discordBot: "unconfigured",
   }
 
-  // Check OpenRouter
-  if (process.env.OPENROUTER_API_KEY) {
-    checks.openrouter = "ok"
+  // Check Gemini API
+  if (process.env.GEMINI_API_KEY) {
+    checks.gemini = "ok"
   }
 
   // Check Qdrant
@@ -23,19 +22,6 @@ export async function GET() {
       checks.qdrant = res.ok ? "ok" : "error"
     } catch {
       checks.qdrant = "error"
-    }
-  }
-
-  // Check Ollama
-  const ollamaUrl = process.env.OLLAMA_URL
-  if (ollamaUrl) {
-    try {
-      const res = await fetch(`${ollamaUrl}/api/tags`, {
-        signal: AbortSignal.timeout(3000),
-      })
-      checks.ollama = res.ok ? "ok" : "error"
-    } catch {
-      checks.ollama = "error"
     }
   }
 

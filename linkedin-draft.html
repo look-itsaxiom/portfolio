@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chase Skibeness — LinkedIn Profile Draft</title>
+<style>
+  @page {
+    size: letter;
+    margin: 0.5in 0.6in;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+    font-size: 9.5pt;
+    line-height: 1.45;
+    color: #1a1a1a;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    padding: 0.5in 0.6in;
+    margin: 0 auto;
+  }
+
+  @media print {
+    .page {
+      padding: 0;
+      margin: 0;
+      min-height: auto;
+    }
+    .page-break {
+      page-break-before: always;
+    }
+  }
+
+  @media screen {
+    body { background: #e8e8e8; }
+    .page {
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      margin: 20px auto;
+    }
+  }
+
+  .doc-title {
+    font-size: 16pt;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 2px;
+  }
+
+  .doc-subtitle {
+    font-size: 9pt;
+    color: #888;
+    font-style: italic;
+    margin-bottom: 18px;
+  }
+
+  h2 {
+    font-size: 10.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #2a2a2a;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 2px;
+    margin-top: 16px;
+    margin-bottom: 8px;
+  }
+
+  h3 {
+    font-size: 10pt;
+    font-weight: 700;
+    color: #111;
+    margin-top: 10px;
+    margin-bottom: 2px;
+  }
+
+  h3 .date {
+    font-weight: 400;
+    font-size: 8.5pt;
+    color: #555;
+    font-style: italic;
+  }
+
+  .label {
+    font-size: 8.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #888;
+    margin-bottom: 3px;
+    margin-top: 10px;
+  }
+
+  .copy-block {
+    background: #f7f7f7;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 10px 12px;
+    font-size: 9.5pt;
+    line-height: 1.5;
+    color: #222;
+    margin-bottom: 8px;
+    white-space: pre-wrap;
+  }
+
+  .note {
+    font-size: 8.5pt;
+    color: #777;
+    font-style: italic;
+    margin-top: 4px;
+    margin-bottom: 8px;
+  }
+
+  ul {
+    padding-left: 16px;
+    margin-bottom: 2px;
+  }
+
+  li {
+    margin-bottom: 3px;
+    font-size: 9.5pt;
+    line-height: 1.4;
+  }
+
+  .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+    margin-top: 4px;
+  }
+
+  .skill-tag {
+    background: #eee;
+    border-radius: 3px;
+    padding: 2px 8px;
+    font-size: 8.5pt;
+    color: #333;
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<div class="page">
+
+  <div class="doc-title">LinkedIn Profile Draft</div>
+  <div class="doc-subtitle">Reference document for updating LinkedIn &mdash; copy blocks are ready to paste</div>
+
+  <h2>Headline</h2>
+  <div class="copy-block">Full Stack Engineer | Developer Tools &amp; AI Systems | Windows, Web, Games</div>
+  <div class="note">98 characters. Leads with proven full stack, adds "Developer Tools" naturally, doesn't look tailored for one role.</div>
+
+  <h2>About / Summary</h2>
+  <div class="copy-block">I build tools that make people more capable &mdash; not tools that replace them.
+
+My path wasn't traditional. I started in IT support, fell in love with scripting, and forced my way into software engineering when a director noticed I was automating half my job in PowerShell. That background means I think end-to-end: from infrastructure to interface to user.
+
+These days I build across the full stack &mdash; React frontends, .NET and Node backends, Azure serverless, Docker deployments &mdash; and I do most of it on Windows using Claude Code as my daily driver. That combination led me to build Dream Factory, a Claude Code plugin that turns a single session into a multi-agent software studio, coordinating AI departments across art, engineering, and game development.
+
+I think AI is this generation's touchscreen moment &mdash; a fundamentally new way to interact with complex systems through natural language. It raises the sea level for everybody's competence. I build AI that covers a person's weaknesses and extends their strengths: a RAG-powered portfolio chat that handles self-promotion I'm bad at, an internal knowledge chatbot deployed where coworkers already work, a card game where an AI arbiter judges player arguments instead of enforcing rigid rules.
+
+I ship across a lot of domains &mdash; developer tools, web platforms, game engines (Unity, Godot, Phaser), AI pipelines &mdash; because interesting problems don't stay in one lane. I have 40+ repos, 65 local projects, and a self-imposed five-project cap to keep myself honest.
+
+What I bring: fast ramp-up, strong opinions held loosely, and a bias toward building things people actually use. What I'm looking for: hard problems, good teammates, and work that matters.</div>
+
+  <h2>Experience</h2>
+
+  <h3>Tapcheck &mdash; Software Engineer <span class="date">September 2024 &ndash; Present</span></h3>
+  <div class="copy-block">Building backend integrations at scale for an earned wage access platform that helps employees avoid predatory payday loans. My team owns the multi-tenant system connecting to 250+ payroll and timeclock systems (ADP, Workday, Dayforce, Viventium Express, and more).
+
+Key contributions:
+
+&bull; Designed and built No Code, an internal integration platform that lets non-engineers create data integrations without a full dev cycle. v1 handled CSV/Excel mapping. v2 added configurable string transformations for edge cases. v3 extended to API-based integrations via serverless workflows. Shifted dozens of integration requests from "needs engineering" to "self-serve," eliminating a recurring 2-week SDLC dependency.
+
+&bull; Building an internal AI chatbot for organizational knowledge &mdash; deployed in Microsoft Teams where people already work. Addresses tribal knowledge gaps and domain knowledge drift that slow down cross-team collaboration.
+
+&bull; Use Claude Code daily for feature implementation, architecture planning, and bug fixes. This hands-on experience directly informed the design of Dream Factory, my Claude Code plugin.
+
+&bull; Drove adoption of Git Flow, split CI/CD into pre/post-merge pipelines, and built ephemeral QA environments for feature isolation &mdash; all without dedicated DevOps support.</div>
+
+  <h3>Limeade &mdash; Software Developer 2 <span class="date">August 2022 &ndash; September 2024</span></h3>
+  <div class="copy-block">Full stack development on React micro frontends and .NET Core microservices for an employer wellness platform.
+
+&bull; Led a greenfield rebuild of the admin portal &mdash; replaced a legacy .NET/Knockout.js/jQuery app with React. Trusted with architectural decisions and implementation from day one.
+
+&bull; Executed a strangler pattern migration, breaking features out of a monolith into two microservices. Result: 75&ndash;115% improvement in frontend load times and a measurable increase in admin staff productivity.
+
+&bull; Ran a cross-functional campaign to adopt PrimeReact as a shared design system. Brought developers and UX designers to the table together, solving the recurring problem of Figma handoffs that assumed impossible frontend changes.
+
+&bull; Promoted from Software Developer to Software Developer 2 in ~8 months &mdash; contributing at mid-level pace as a junior.
+
+&bull; Led WCAG AA accessibility compliance work across the React frontend.
+
+&bull; Built automated developer environment setup and comprehensive onboarding documentation to reduce new-hire ramp time.</div>
+
+</div>
+
+<!-- PAGE 2 -->
+<div class="page page-break">
+
+  <h3>Limeade &mdash; Software Developer <span class="date">January 2022 &ndash; August 2022</span></h3>
+  <div class="copy-block">Transitioned from IT into the engineering department after the Director of Engineering noticed my scripting work and asked if I'd considered software development. Brought system administration instincts into a full stack role &mdash; JavaScript, React, .NET Core, C#, Node.js.
+
+&bull; Proactively designed and shipped usability improvements for the admin tool: data validation, microinteractions, and custom loading states.
+
+&bull; Contributed to WCAG AA accessibility improvements across the React frontend.
+
+&bull; Automated the developer onboarding setup process and authored architecture documentation for new team members.</div>
+
+  <h3>Limeade &mdash; IT Support Specialist <span class="date">March 2020 &ndash; January 2022</span></h3>
+  <div class="copy-block">De facto systems administrator managing end-user security, device deployment, and automation across Windows and macOS environments.
+
+&bull; Built PowerShell automations for laptop inventory management, automated password resets via email, and Zendesk auto-response workflows &mdash; earning a reputation as "the scripting person."
+
+&bull; Deployed Windows environments via Azure AD (Hybrid), Intune, and AutoPilot. Managed macOS via Jamf and shell scripting.
+
+&bull; Built a serverless Azure Function API endpoint that saved significant support specialist labor hours.
+
+&bull; This role is where the engineering pivot happened: studied JavaScript, Ruby, and Python during paternity leave, then transitioned into the engineering department.</div>
+
+  <h3>Groupon &mdash; IT Helpdesk Analyst <span class="date">June 2018 &ndash; March 2020</span></h3>
+  <div class="copy-block">IT support in a fast-paced tech environment. Managed Zendesk ticketing, hardware provisioning, conference room AV, and Active Directory administration. First job where I started writing scripts to automate repetitive support tasks.</div>
+
+  <h2>Projects</h2>
+
+  <h3>Dream Factory &mdash; Claude Code Plugin <span class="date">Feb 2026 &ndash; Present</span></h3>
+  <div class="copy-block">A Claude Code plugin that turns a single session into a multi-agent software studio. Coordinates specialized AI "departments" &mdash; engineering, art/design, game dev, R&amp;D &mdash; using agent teams, skill dispatching, and external engine orchestration (Codex CLI, Gemini CLI).
+
+Built with YAML-driven configuration, bash hooks, and deep integration with Claude Code internals. Manages project manifests, status tracking, department tool catalogs, and cross-engine dispatch protocols.
+
+Tech: Claude Code Plugin SDK, YAML, Bash, Python, JavaScript</div>
+
+  <h3>Millennium: The Living Duel <span class="date">2025 &ndash; Present</span></h3>
+  <div class="copy-block">A competitive card game where rules are "common law" &mdash; cards have evocative descriptions instead of explicit rules, and players argue interpretations to an AI Arbiter that adjudicates disputes and builds precedent over time.
+
+v1 complete with first playtest done. 665+ server tests, 34 client tests. Docker deployment (API + React client + Qdrant vector DB for precedent search). Uses LLMs for what they're actually good at: judgment and interpretation, not prose generation.
+
+Tech: TypeScript, Node.js, Fastify, WebSocket, React, Vitest, Docker, Qdrant</div>
+
+  <h3>ClawCraft.ai <span class="date">2025 &ndash; Present</span></h3>
+  <div class="copy-block">An MMORPG where AI agents (Claude, GPT, custom bots) are the players, not the NPCs. Instead of a traditional game client, agents learn game mechanics through discoverable skill files (markdown documentation served via curl) and interact through a REST API.
+
+Thesis: skill files delivered via curl are more effective than MCP servers for teaching agents to interact with unfamiliar systems. Live at clawcraft.world/skills.
+
+Tech: TypeScript, Fastify, MongoDB, Vitest, VitePress</div>
+
+  <h3>Ask Axiom &mdash; RAG-Powered Portfolio Chat <span class="date">2025 &ndash; Present</span></h3>
+  <div class="copy-block">A portfolio site with an AI chat widget that answers questions about me using retrieval-augmented generation. Built because talking positively about myself feels like bragging &mdash; so I built an AI to do it for me. Includes a Discord bot for human escalation on low-confidence answers and an admin dashboard for knowledge base management.
+
+Tech: Next.js, React, TypeScript, Qdrant, Gemini, Discord.js, Docker Compose</div>
+
+  <h2>Skills (Suggested Order)</h2>
+  <div class="skills-list">
+    <span class="skill-tag">TypeScript</span>
+    <span class="skill-tag">React.js</span>
+    <span class="skill-tag">Claude Code</span>
+    <span class="skill-tag">Node.js</span>
+    <span class="skill-tag">.NET Core</span>
+    <span class="skill-tag">PowerShell</span>
+    <span class="skill-tag">Windows Development</span>
+    <span class="skill-tag">Developer Tools</span>
+    <span class="skill-tag">AI/LLM Integration</span>
+    <span class="skill-tag">Docker</span>
+    <span class="skill-tag">Azure Functions</span>
+    <span class="skill-tag">Game Development</span>
+    <span class="skill-tag">CI/CD</span>
+  </div>
+
+</div>
+
+</body>
+</html>

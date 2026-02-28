@@ -5,8 +5,8 @@ export default function ImpactIndexPage() {
   const impact = getAllImpact()
 
   return (
-    <section className="mx-auto max-w-5xl px-6 py-16">
-      <h1 className="text-4xl font-semibold">Impact</h1>
+    <section className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-16">
+      <h1 className="text-2xl font-semibold sm:text-3xl md:text-4xl">Impact</h1>
       <p className="mt-3 text-muted-foreground">
         Case studies that show how Chase led product-grade systems with a small team.
       </p>

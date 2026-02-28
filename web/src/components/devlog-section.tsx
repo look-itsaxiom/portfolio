@@ -26,13 +26,13 @@ const devlogEntries = [
 
 export function DevlogSection() {
   return (
-    <section id="devlog" className="py-20">
-      <div className="mx-auto max-w-5xl px-6">
-        <h2 className="text-3xl font-bold tracking-tight">DevLog</h2>
-        <p className="mt-2 text-muted-foreground">
+    <section id="devlog" className="py-12 sm:py-20">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">DevLog</h2>
+        <p className="mt-2 text-sm text-muted-foreground sm:text-base">
           Short updates on what I&apos;m building, learning, and shipping.
         </p>
-        <div className="mt-10 space-y-4">
+        <div className="mt-6 space-y-4 sm:mt-10">
           {devlogEntries.map((entry) => (
             <Card key={entry.date}>
               <CardHeader className="pb-2">

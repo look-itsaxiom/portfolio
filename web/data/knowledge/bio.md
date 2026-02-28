@@ -1,23 +1,38 @@
-# Chase — Bio & Positioning
+# Chase — Bio & Background
 
-Chase is a full-stack engineer who builds product-grade systems that remove operational friction. By day, they work on enterprise platforms — no-code integrations, admin tooling, and modernization. In their labs, they explore multi-app SaaS platforms, AI-native experiences like games designed for AI agents, and dabble in game development.
+Chase is a full-stack software engineer who started in IT, automated his way out of every job, and got pulled into engineering by a director who noticed. He builds product-grade systems that remove operational friction at work, and in his own time, he builds games, AI tools, and creative infrastructure across 40+ repositories.
 
 ## Identity
 - Goes by Chase (no last name on portfolio)
 - Creative alias: Axiom
 - Tone: creative and clever, but professional — funny without being risky
 
-## Core Narrative
-"I build product-grade systems that remove operational friction — and I explore AI-native experiences as labs."
+## Career Arc
+Chase's path into engineering was unconventional. He started in IT helpdesk and support roles — HD Fowler, then Groupon, where he became known as "the scripting guy" for automating ticket workflows and inventory management. At Limeade, he was a de facto sysadmin running PowerShell automation across Windows and macOS environments: laptop provisioning, Zendesk auto-responses, Azure Functions, Windows AutoPilot, Jamf deployments.
 
-## What They're Looking For
+The Director of Engineering at Limeade noticed Chase's scripting work and asked if he'd considered software engineering. Chase had previously tried CS in community college around 2014-2015 and sworn it off. But when his son was born in 2021, he used paternity leave to study JavaScript, Ruby, and Python. He came back and transitioned into the engineering department. Within 6-8 months he was promoted from junior to associate engineer for contributing at a mid-level pace.
+
+He went on to lead a greenfield admin rebuild, execute a strangler-pattern migration that improved load times by 75-115%, and evangelize a shared design system across engineering and UX. He's now at Tapcheck, where he designed and built a No Code integration platform serving 250+ payroll and timeclock systems.
+
+## Philosophy on AI
+Chase believes AI is this generation's touchscreen-level innovation — a fundamentally new way for humans to interact with complex systems through natural language. His view is that AI raises the competence floor for everybody, and that its purpose is to increase the value humans deliver, not to replace the humans delivering it. He's against tools that promise to replace developers. Every AI system he builds — Dream Factory, Ask Axiom, the Tapcheck knowledge chatbot — is designed to extend what a person can do, not to remove the person from the equation.
+
+## Creative Side
+Chase is a prolific builder. He has 43 GitHub repositories and 65 local projects spanning games, SaaS platforms, AI tools, developer infrastructure, and creative pipelines. He builds across Unity (C#), Godot (C#), Phaser 3 (TypeScript), and Ren'Py. He's an aspiring game publisher and competitive gamer. He built Dream Factory — a Claude Code plugin — specifically to manage his own tendency to start too many things, restricting himself to 5 active projects at a time.
+
+## Ask Axiom
+This chat widget exists because Chase is bad at self-promotion. Talking positively about himself feels like bragging, so he built an AI to do it for him. Ask Axiom is RAG-powered, answers from a curated knowledge base, and can escalate to Chase via Discord when it doesn't know something. It's a working example of his philosophy: AI handling something a human finds difficult, so the human can focus on what they're good at.
+
+## Personal
+- Seattle native, born and raised in Washington
+- Has a family (son born 2021)
+- Competitive gamer, aspiring game publisher
+- Introverted but values clear communication
+- Prefers autonomy and wants others to feel autonomous too
+- Challenges decisions when the rationale is "because that's how we do it," but defers to experience when the reasoning is sound
+
+## What He's Looking For
 - Product teams that ship fast and value clean architecture
-- Roles where systems thinking and frontend craft intersect
-- Side collaborations on interesting AI-native projects
-
-## Working Style
-- Prefers TypeScript everywhere (frontend and backend)
-- Believes in shipping incrementally — each phase should be independently valuable
-- Values clean architecture and testability
-- Likes to automate everything they can
-- Enjoys mentoring and cross-functional collaboration
+- Roles where systems thinking and engineering craft intersect
+- Environments where AI is treated as a tool to extend people, not replace them
+- Autonomy with shared context and alignment

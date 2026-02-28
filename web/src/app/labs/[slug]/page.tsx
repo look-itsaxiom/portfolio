@@ -18,10 +18,10 @@ export default function LabPage({ params }: { params: { slug?: string } }) {
   const paragraphs = entry.content.trim().split(/\n\n+/)
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-20">
+    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-20">
       <Link
         href="/labs"
-        className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+        className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground sm:mb-8"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to Labs
@@ -30,8 +30,8 @@ export default function LabPage({ params }: { params: { slug?: string } }) {
       <Badge variant="secondary" className="mb-4">
         Labs
       </Badge>
-      <h1 className="text-4xl font-bold tracking-tight">{entry.title}</h1>
-      <p className="mt-3 text-xl text-muted-foreground">{entry.summary}</p>
+      <h1 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">{entry.title}</h1>
+      <p className="mt-2 text-base text-muted-foreground sm:mt-3 sm:text-xl">{entry.summary}</p>
       <p className="mt-2 text-sm text-muted-foreground">Status: {entry.status}</p>
 
       <div className="mt-6 flex flex-wrap gap-2">
@@ -42,7 +42,7 @@ export default function LabPage({ params }: { params: { slug?: string } }) {
         ))}
       </div>
 
-      <Separator className="my-10" />
+      <Separator className="my-6 sm:my-10" />
 
       <div className="space-y-4 text-muted-foreground">
         {paragraphs.map((p) => (
