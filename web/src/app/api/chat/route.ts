@@ -183,7 +183,7 @@ export async function POST(req: Request) {
     model: google(GEMINI_MODEL),
     system: buildSystemPrompt(ragContext, pageContext),
     messages: modelMessages,
-    maxOutputTokens: 250,
+    maxOutputTokens: 600,
   })
 
   const responseText = result.text || ""
