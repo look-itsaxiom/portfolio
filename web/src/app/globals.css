@@ -120,6 +120,14 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    overflow-x: hidden;
+  }
+  body {
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
   .chat-scrollbar::-webkit-scrollbar {
     width: 6px;
   }

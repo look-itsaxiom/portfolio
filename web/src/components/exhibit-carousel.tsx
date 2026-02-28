@@ -103,7 +103,7 @@ export function ExhibitCarousel({ exhibits }: { exhibits: Exhibit[] }) {
   }
 
   return (
-    <div className="w-full space-y-4">
+    <div className="min-w-0 w-full space-y-4">
       <Carousel
         opts={{ loop: true }}
         plugins={[Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true })]}
@@ -113,11 +113,11 @@ export function ExhibitCarousel({ exhibits }: { exhibits: Exhibit[] }) {
         <CarouselContent>
           {exhibits.map((exhibit) => (
             <CarouselItem key={exhibit.slug}>
-              <div className="border-l-2 border-primary/40 pl-5 py-2">
-                <div className="text-sm uppercase tracking-wide text-primary/80">
+              <div className="border-l-2 border-primary/40 pl-3 py-2 sm:pl-5">
+                <div className="text-xs uppercase tracking-wide text-primary/80 sm:text-sm">
                   {exhibit.category}
                 </div>
-                <h2 className="mt-1 text-xl font-semibold">{exhibit.title}</h2>
+                <h2 className="mt-1 text-lg font-semibold sm:text-xl">{exhibit.title}</h2>
                 <p className="mt-1 text-sm text-muted-foreground">
                   {exhibit.description}
                 </p>
