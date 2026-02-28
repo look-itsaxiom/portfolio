@@ -2,7 +2,7 @@
   {
     "slug": "integration-platform",
     "title": "No-Code Integration Platform",
-    "category": "impact",
+    "category": "professional",
     "tagline": "I turned weeks of integration work into a few clicks.",
     "description": "Built a full-stack no-code integration capability inside the back-of-house admin app so admins could define schemas and transformations without engineering. Started with file-based timeclock integrations, expanded to file-based payroll, and later shipped the No Code API to enable API-based timeclock and payroll integrations.",
     "story": "Partner data arrived in every shape imaginable. Instead of burning sprints on one-off mappings, we built a full-stack no-code system inside the back-of-house admin app that lets admins define schemas and transformations. It started with file-based timeclock integrations, expanded to file-based payroll, and grew into a richer transformation system so more integrations could be delivered via no-code. Most recently, we shipped the No Code API to enable API-based timeclock and payroll integrations (powered by Azure Logic Apps).",
@@ -18,7 +18,7 @@
   {
     "slug": "platform-modernization",
     "title": "Platform Modernization & Internal Tooling",
-    "category": "impact",
+    "category": "professional",
     "tagline": "I got hired for IT. I left as an engineer.",
     "description": "Started in IT, automated everything possible, and got pulled into engineering. Built a one-touch dev environment, pushed internal tooling forward, helped move a legacy codebase through strangler-pattern modernization, and improved accessibility + performance in the user-facing product website.",
     "story": "I started in IT, automated everything I could, and got pulled into engineering. With a mentor who cared about clean architecture, I learned how to ship in a real product org. I built a one-touch dev environment, pushed internal tooling forward, helped modernize a legacy codebase via strangler-pattern migration, and improved accessibility + performance in the user-facing product website.",
@@ -29,6 +29,63 @@
       "Azure Cosmos DB"
     ],
     "axiomComment": "The classic origin story — from IT to engineering through sheer persistence."
+  },
+  {
+    "slug": "millennium",
+    "title": "Millennium: The Living Duel",
+    "category": "labs",
+    "tagline": "Rules are common law. The AI Arbiter adjudicates.",
+    "description": "A competitive card game where cards have evocative descriptions instead of explicit rules. Players argue interpretations and an AI Arbiter makes rulings that persist as precedent in a vector database.",
+    "story": "Millennium treats LLMs the way they actually work well — as judges of ambiguous situations, not chatbots. Cards have evocative descriptions instead of explicit rules. Players argue what a card should do, and an AI Arbiter makes a ruling. Those rulings persist in Qdrant, building precedent that informs future decisions. The rules are literally common law. v1 is done, first playtest is in the books, and 665+ server tests keep it honest.",
+    "stack": [
+      "TypeScript",
+      "React",
+      "WebSocket",
+      "Qdrant",
+      "Docker",
+      "OpenRouter"
+    ],
+    "status": "v1 Complete",
+    "axiomComment": "665 tests. An AI arbiter. Rules that evolve through play."
+  },
+  {
+    "slug": "dream-factory",
+    "title": "Dream Factory",
+    "category": "labs",
+    "tagline": "I built this to manage 5 projects from one terminal.",
+    "description": "A Claude Code plugin that turns a single AI session into a multi-agent software studio with departments, agent teams, and external engine dispatch.",
+    "story": "Dream Factory organizes a single Claude Code session into a multi-department studio. Engineering, art, R&D, game dev, accounting — each department has its own tools, context, and delegation patterns. Agent Teams handle parallel work, and external AI engines get dispatched as specialized workers. Built in under a week because managing five creative projects from one terminal was getting out of hand.",
+    "stack": [
+      "YAML",
+      "JavaScript",
+      "Python",
+      "Claude Code Plugin SDK"
+    ],
+    "status": "Published",
+    "links": [
+      {
+        "label": "Marketplace",
+        "href": "https://github.com/look-itsaxiom/dream-factory"
+      }
+    ],
+    "axiomComment": "Chase built this to manage 5 projects from one terminal."
+  },
+  {
+    "slug": "ask-axiom",
+    "title": "Ask Axiom",
+    "category": "labs",
+    "tagline": "I'm bad at talking about myself, so I built an AI to do it.",
+    "description": "A RAG-powered portfolio chatbot that guides visitors through Chase's work using a curated knowledge base, with Discord escalation for questions it can't answer.",
+    "story": "Chase is bad at self-promotion. Talking positively about your own work feels like bragging, so they built an AI to do it. Ask Axiom is RAG-powered — visitor questions get embedded via Gemini, matched against a Qdrant vector database, and relevant context gets injected into the system prompt. When it doesn't know something, it escalates to Chase via Discord.",
+    "stack": [
+      "TypeScript",
+      "Next.js",
+      "Vercel AI SDK",
+      "Qdrant",
+      "Gemini"
+    ],
+    "status": "Live",
+    "axiomComment": "I exist because Chase would rather build an AI than write an 'About Me' section."
   },
   {
     "slug": "drink-ux",
@@ -69,5 +126,22 @@
       }
     ],
     "axiomComment": "This one's wild — a game designed for AIs, not humans. Chase is onto something here."
+  },
+  {
+    "slug": "flownote",
+    "title": "FlowNote",
+    "category": "labs",
+    "tagline": "Notes that calculate as you type.",
+    "description": "A note-taking app with inline calculations — write naturally, compute seamlessly. 222 tests, green build.",
+    "story": "FlowNote is a note-taking application where calculations live inline with your text. Write a note, drop in a formula, and results update as you type. 222 tests, green build. Currently on hold while other projects take priority.",
+    "stack": [
+      "TypeScript",
+      "React",
+      "Vite",
+      "Express",
+      "Firebase"
+    ],
+    "status": "On Hold",
+    "axiomComment": "Simple idea, clean execution. Sometimes the best tools do one thing well."
   }
 ]

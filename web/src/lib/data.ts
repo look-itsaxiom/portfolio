@@ -6,7 +6,7 @@ const DATA_ROOT = path.join(process.cwd(), "data")
 export interface Project {
   slug: string
   title: string
-  category: "impact" | "labs"
+  category: "professional" | "labs"
   tagline: string
   description: string
   story: string
@@ -20,8 +20,8 @@ export function getProjects(): Project[] {
   return JSON.parse(fs.readFileSync(path.join(DATA_ROOT, "projects.json"), "utf-8"))
 }
 
-export function getImpactProjects(): Project[] {
-  return getProjects().filter((p) => p.category === "impact")
+export function getProfessionalProjects(): Project[] {
+  return getProjects().filter((p) => p.category === "professional")
 }
 
 export function getLabsProjects(): Project[] {

@@ -17,7 +17,7 @@ export function ContactSection() {
               something new.
             </p>
             <a
-              href="mailto:hello@chase.dev"
+              href="mailto:itsaxiom.dev@proton.me"
               className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
             >
               Get in Touch

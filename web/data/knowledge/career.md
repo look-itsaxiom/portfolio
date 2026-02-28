@@ -1,7 +1,7 @@
 # Chase's Career History
 
 ## Overview
-Chase's career follows an unconventional arc: IT helpdesk to sysadmin to software engineer, driven by a pattern of automating everything in his environment until someone noticed he should be building software full-time.
+Chase's career follows an unconventional arc: IT helpdesk to sysadmin to software engineer, driven by a pattern of automating everything in their environment until someone noticed they should be building software full-time.
 
 ## HD Fowler — IT Support (Oct 2017 - Jun 2018)
 - Location: Washington state
@@ -14,7 +14,7 @@ Chase's career follows an unconventional arc: IT helpdesk to sysadmin to softwar
 - Role: Helpdesk support
 - Built Zendesk automation workflows and inventory management scripts
 - Became known internally as "the scripting guy" for automating repetitive support tasks
-- This is where the pattern started: Chase automated his own job to the point where people noticed
+- This is where the pattern started: Chase automated their own job to the point where people noticed
 
 ## Limeade — IT / Sysadmin (Mar 2020 - Jan 2022)
 - Location: Bellevue, WA (remote during COVID)
@@ -29,10 +29,10 @@ Chase's career follows an unconventional arc: IT helpdesk to sysadmin to softwar
   - Azure Functions for high-frequency event processing
   - Hybrid Azure AD administration
   - Intune MDM management
-- This role bridged IT and engineering. Chase was writing real software in PowerShell and Azure Functions, even though his title was IT.
+- This role bridged IT and engineering. Chase was writing real software in PowerShell and Azure Functions, even though their title was IT.
 
 ## The Pivot (2021-2022)
-The Director of Engineering at Limeade noticed Chase's scripting and automation work and asked if he'd ever considered software engineering. Chase had previously attempted CS coursework in community college around 2014-2015 and dropped it. But with a newborn son in 2021, he used FMLA paternity leave to study JavaScript, Ruby, and Python. When he returned, he transitioned into the engineering department.
+The Director of Engineering at Limeade noticed Chase's scripting and automation work and asked if they'd ever considered software engineering. Chase had previously attempted CS coursework in community college around 2014-2015 and dropped it. But with a newborn in 2021, they used FMLA paternity leave to study JavaScript, Ruby, and Python. When they returned, they transitioned into the engineering department.
 
 ## Limeade — Software Engineer (Jan 2022 - Sept 2024)
 - Location: Bellevue, WA (later acquired by WebMD)
@@ -51,7 +51,7 @@ The Director of Engineering at Limeade noticed Chase's scripting and automation 
 - Location: Remote (company based in CA)
 - Role: Software Engineer, Integrations team
 - Company: Earned wage access platform — partners with employers so employees can access earned wages before payday, providing an alternative to predatory payday loans.
-- Team: Chase + tech lead + 2 offshore engineers + 2 offshore QA. Tech lead handles PM and cross-team coordination; Chase designs and implements the technical solutions.
+- Team: Chase + tech lead + 2 offshore engineers + 2 offshore QA. Tech lead handles PM and cross-team coordination; Chase designs and implements technical solutions.
 - Key achievements:
   - **No Code Platform** (Chase's primary creation):
     - v1: CSV header mapping UI — internal admins can map payroll CSV exports to Tapcheck's common data model without engineering involvement. Eliminated 2-week SDLC dependency for onboarding new partners.
@@ -62,4 +62,4 @@ The Director of Engineering at Limeade noticed Chase's scripting and automation 
   - **AI knowledge chatbot**: Building an internal chatbot for organizational and domain knowledge, deployed in Microsoft Teams where people already work. Addresses tribal knowledge loss and domain knowledge drift.
 
 ## The Pattern
-Across every role, Chase's approach has been consistent: identify repetitive friction, automate it away, and build systems that scale without linear effort. This pattern took him from IT helpdesk scripts to a No Code platform serving 250+ integrations. The tools change, the instinct doesn't.
+Across every role, Chase's approach has been consistent: identify repetitive friction, automate it away, and build systems that scale without linear effort. This pattern took them from IT helpdesk scripts to a No Code platform serving 250+ integrations. The tools change, the instinct doesn't.

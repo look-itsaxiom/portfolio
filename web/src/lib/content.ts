@@ -6,24 +6,17 @@ const DATA_ROOT = path.join(process.cwd(), "data")
 
 type Link = { label: string; href: string }
 
-export type ImpactEntry = {
+export type ProjectEntry = {
   slug: string
   title: string
   summary: string
-  role: string
-  impact: string[]
+  category: "professional" | "labs"
+  role?: string
+  impact?: string[]
+  status?: string
   stack: string[]
   tags: string[]
-}
-
-export type LabEntry = {
-  slug: string
-  title: string
-  summary: string
-  status: string
-  stack: string[]
-  tags: string[]
-  links: Link[]
+  links?: Link[]
 }
 
 export type DevlogEntry = {
@@ -47,46 +40,40 @@ function readMarkdown(dir: string, filename: string) {
   return { data, content }
 }
 
-export function getAllImpact(): ImpactEntry[] {
-  return readDir("impact").map((file) => {
+export function getAllProjects(): ProjectEntry[] {
+  return readDir("projects").map((file) => {
     const slug = file.replace(/\.md$/, "")
-    const { data } = readMarkdown("impact", file)
+    const { data } = readMarkdown("projects", file)
     return {
       slug,
       title: data.title,
       summary: data.summary,
+      category: data.category ?? "labs",
       role: data.role,
-      impact: data.impact ?? [],
-      stack: data.stack ?? [],
-      tags: data.tags ?? [],
-    }
-  })
-}
-
-export function getImpactBySlug(slug: string) {
-  const { data, content } = readMarkdown("impact", `${slug}.md`)
-  return { slug, content, ...data } as ImpactEntry & { content: string }
-}
-
-export function getAllLabs(): LabEntry[] {
-  return readDir("labs").map((file) => {
-    const slug = file.replace(/\.md$/, "")
-    const { data } = readMarkdown("labs", file)
-    return {
-      slug,
-      title: data.title,
-      summary: data.summary,
+      impact: data.impact,
       status: data.status,
       stack: data.stack ?? [],
       tags: data.tags ?? [],
-      links: data.links ?? [],
+      links: data.links,
     }
   })
 }
 
-export function getLabBySlug(slug: string) {
-  const { data, content } = readMarkdown("labs", `${slug}.md`)
-  return { slug, content, ...data } as LabEntry & { content: string }
+export function getProjectBySlug(slug: string) {
+  const { data, content } = readMarkdown("projects", `${slug}.md`)
+  return {
+    slug,
+    content,
+    title: data.title,
+    summary: data.summary,
+    category: data.category ?? "labs",
+    role: data.role,
+    impact: data.impact,
+    status: data.status,
+    stack: data.stack ?? [],
+    tags: data.tags ?? [],
+    links: data.links,
+  } as ProjectEntry & { content: string }
 }
 
 export function getAllDevlog(): DevlogEntry[] {

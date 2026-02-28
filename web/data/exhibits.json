@@ -1,27 +1,35 @@
 [
   {
+    "slug": "millennium",
+    "title": "Millennium: The Living Duel",
+    "category": "labs",
+    "description": "665 tests. An AI arbiter. Rules that evolve through play.",
+    "axiomNote": "This is what happens when you let an AI judge a card game.",
+    "href": "/projects/millennium"
+  },
+  {
+    "slug": "dream-factory",
+    "title": "Dream Factory",
+    "category": "labs",
+    "description": "Chase built this to manage 5 projects from one terminal.",
+    "axiomNote": "A plugin that turns one session into a software studio.",
+    "href": "/projects/dream-factory"
+  },
+  {
     "slug": "clawcraft",
     "title": "ClawCraft.ai",
     "category": "labs",
     "description": "A game built for AI agents.",
     "axiomNote": "This is what happens when APIs become the game client.",
-    "href": "/labs/clawcraft"
-  },
-  {
-    "slug": "drink-ux",
-    "title": "Drink\u2011UX",
-    "category": "labs",
-    "description": "A better coffee ordering UI.",
-    "axiomNote": "A playful interface with serious UX intent.",
-    "href": "/labs/drink-ux"
+    "href": "/projects/clawcraft"
   },
   {
     "slug": "integration-platform",
-    "title": "No\u2011Code Integration Platform",
-    "category": "impact",
+    "title": "No-Code Integration Platform",
+    "category": "professional",
     "description": "Onboarding in days, not weeks.",
-    "axiomNote": "Chase led this with a small team \u2014 the impact is very real.",
-    "href": "/impact/integration-platform"
+    "axiomNote": "Chase led this with a small team — the impact is very real.",
+    "href": "/projects/integration-platform"
   },
   {
     "slug": "axiom-stage",

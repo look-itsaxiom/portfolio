@@ -1,6 +1,7 @@
 ---
 title: "Millennium: The Living Duel"
 summary: "A competitive card game where rules are common law — players argue interpretations and an AI Arbiter adjudicates."
+category: labs
 status: "v1 Complete"
 stack: ["TypeScript", "Node.js", "Express", "WebSocket", "React", "Qdrant", "Docker", "OpenRouter"]
 tags: ["labs", "ai", "games"]
