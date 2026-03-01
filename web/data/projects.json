@@ -54,21 +54,48 @@
     "category": "labs",
     "tagline": "I built this to manage 5 projects from one terminal.",
     "description": "A Claude Code plugin that turns a single AI session into a multi-agent software studio with departments, agent teams, and external engine dispatch.",
-    "story": "Dream Factory organizes a single Claude Code session into a multi-department studio. Engineering, art, R&D, game dev, accounting — each department has its own tools, context, and delegation patterns. Agent Teams handle parallel work, and external AI engines get dispatched as specialized workers. Built in under a week because managing five creative projects from one terminal was getting out of hand.",
+    "story": "Dream Factory organizes a single Claude Code session into a multi-department studio. Engineering, art, R&D, game dev, accounting — each department has its own tools, context, and delegation patterns. Agent Teams handle parallel work, and external AI engines get dispatched as specialized workers. Built in under a week because managing five creative projects from one terminal was getting out of hand. The core patterns have since been extracted into Open Workshop, a distributable plugin anyone can install.",
     "stack": [
       "YAML",
       "JavaScript",
-      "Python",
+      "Bash",
       "Claude Code Plugin SDK"
     ],
     "status": "Published",
     "links": [
       {
-        "label": "Marketplace",
+        "label": "GitHub",
         "href": "https://github.com/look-itsaxiom/dream-factory"
+      },
+      {
+        "label": "Open Workshop",
+        "href": "https://github.com/look-itsaxiom/open-workshop"
       }
     ],
-    "axiomComment": "Chase built this to manage 5 projects from one terminal."
+    "axiomComment": "Chase built this to manage 5 projects from one terminal. Then extracted it into Open Workshop so anyone can use it."
+  },
+  {
+    "slug": "open-workshop",
+    "title": "Open Workshop",
+    "category": "labs",
+    "tagline": "A self-organizing AI workshop that grows with you.",
+    "description": "A Claude Code plugin that gives every session a persistent, self-growing studio — project portfolio, department dispatch, engine offloading, and ROI tracking.",
+    "story": "Open Workshop was extracted from Dream Factory after friends wanted to try it. The core insight: Claude Code sessions start cold every time, wasting tokens on re-orientation. Open Workshop fixes that with a dashboard that loads your project status, milestones, and blockers at startup. It ships with only R&D as a department — a stem cell that builds other departments as you need them. External AI engines (Codex, Gemini, anything with a CLI) get routed tasks to save tokens. Every piece of work links to a milestone so you can track what you're getting for your spend.",
+    "stack": [
+      "Bash",
+      "JavaScript",
+      "YAML",
+      "Markdown",
+      "Claude Code Plugin SDK"
+    ],
+    "status": "v0.1.0",
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/look-itsaxiom/open-workshop"
+      }
+    ],
+    "axiomComment": "The plugin that builds itself. Ships with one department, grows into whatever you need."
   },
   {
     "slug": "ask-axiom",
