@@ -9,12 +9,13 @@ export function generateStaticParams() {
   return getAllProjects().map((entry) => ({ slug: entry.slug }))
 }
 
-export default function ProjectDetailPage({ params }: { params: { slug?: string } }) {
-  if (!params?.slug) notFound()
+export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  if (!slug) notFound()
 
   let entry: ReturnType<typeof getProjectBySlug>
   try {
-    entry = getProjectBySlug(params.slug)
+    entry = getProjectBySlug(slug)
   } catch {
     notFound()
   }

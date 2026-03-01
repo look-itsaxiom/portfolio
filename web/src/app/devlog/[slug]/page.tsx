@@ -9,10 +9,11 @@ export function generateStaticParams() {
   return getAllDevlog().map((entry) => ({ slug: entry.slug }))
 }
 
-export default function DevlogDetailPage({ params }: { params: { slug?: string } }) {
-  if (!params?.slug) notFound()
+export default async function DevlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  if (!slug) notFound()
 
-  const entry = getDevlogBySlug(params.slug)
+  const entry = getDevlogBySlug(slug)
   if (!entry) notFound()
 
   const paragraphs = entry.content.trim().split(/\n\n+/)
