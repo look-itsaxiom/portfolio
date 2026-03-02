@@ -50,7 +50,7 @@ services:
     container_name: ask-axiom-bot
     restart: unless-stopped
     ports:
-      - "3100:3100"
+      - "3101:3100"
     environment:
       - DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN}
       - DISCORD_USER_ID=${DISCORD_USER_ID}
