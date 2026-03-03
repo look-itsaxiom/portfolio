@@ -35,7 +35,7 @@
     "title": "Millennium: The Living Duel",
     "category": "labs",
     "tagline": "Rules are common law. The AI Arbiter adjudicates.",
-    "description": "A competitive card game where cards have evocative descriptions instead of explicit rules. Players argue interpretations and an AI Arbiter makes rulings that persist as precedent in a vector database.",
+    "description": "A competitive card game where rules are common law — players argue interpretations and an AI Arbiter adjudicates.",
     "story": "Millennium treats LLMs the way they actually work well — as judges of ambiguous situations, not chatbots. Cards have evocative descriptions instead of explicit rules. Players argue what a card should do, and an AI Arbiter makes a ruling. Those rulings persist in Qdrant, building precedent that informs future decisions. The rules are literally common law. v1 is done, first playtest is in the books, and 665+ server tests keep it honest.",
     "stack": [
       "TypeScript",
@@ -119,7 +119,7 @@
     "title": "Drink-UX",
     "category": "labs",
     "tagline": "I tried to give indie coffee shops a Starbucks-grade ordering UI.",
-    "description": "Multi-app SaaS platform that lets coffee shops keep their existing POS (Square/Toast/Clover) while offering customers a slick, visual drink builder.",
+    "description": "A multi-app SaaS concept that gives indie coffee shops a Starbucks-grade ordering UI without replacing their POS.",
     "story": "Most coffee shops are stuck with clunky POS menus. I built Drink-UX so they could keep their existing POS (Square/Toast/Clover) while offering customers a slick, visual drink builder. Actively in development — the front-end drink builder is demo-able and POS integrations are being built out.",
     "stack": [
       "TypeScript",
@@ -129,6 +129,12 @@
       "POS APIs"
     ],
     "status": "Active",
+    "links": [
+      {
+        "label": "Demo",
+        "href": "#"
+      }
+    ],
     "axiomComment": "Chase wanted to make ordering coffee feel as good as the coffee itself."
   },
   {
@@ -159,8 +165,8 @@
     "title": "FlowNote",
     "category": "labs",
     "tagline": "Notes that calculate as you type.",
-    "description": "A note-taking app with inline calculations — write naturally, compute seamlessly. 222 tests, green build.",
-    "story": "FlowNote is a note-taking application where calculations live inline with your text. Write a note, drop in a formula, and results update as you type. 222 tests, green build. Currently on hold while other projects take priority.",
+    "description": "A note-taking app with inline calculations — write naturally, compute seamlessly.",
+    "story": "FlowNote is a note-taking application where calculations live inline with your text. Write a note, drop in a formula, and results update as you type. Built with React and Vite on the frontend, Express and Firebase on the backend. 222 tests, green build. Currently on hold while other projects take priority.",
     "stack": [
       "TypeScript",
       "React",

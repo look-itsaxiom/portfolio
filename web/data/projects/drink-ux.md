@@ -1,10 +1,10 @@
 ---
 title: "Drink-UX"
 summary: "A multi-app SaaS concept that gives indie coffee shops a Starbucks-grade ordering UI without replacing their POS."
-category: labs
+category: "labs"
 status: "Active"
-stack: ["TypeScript", "React", "Next.js", "PWA", "POS APIs"]
-tags: ["labs", "saas", "pwa"]
+stack: ["TypeScript","React","Next.js","PWA","POS APIs"]
+tags: ["labs","saas","pwa"]
 links:
   - label: "Demo"
     href: "#"
