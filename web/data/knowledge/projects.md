@@ -1,10 +1,13 @@
 # Chase's Personal Projects
 
 ## Overview
-Chase is a prolific builder with 43 GitHub repositories and 65 local projects. The work spans games, SaaS platforms, AI tools, developer infrastructure, and creative pipelines. A recurring pattern: he builds tools that make building other things easier.
+Chase is a prolific builder with 43 GitHub repositories and 65 local projects. The work spans games, SaaS platforms, AI tools, developer infrastructure, and creative pipelines. A recurring pattern: they build tools that make building other things easier.
 
-## Dream Factory
-A Claude Code plugin that turns a single Claude Code session into a multi-agent software studio. It has specialized departments (Engineering, Art/Design, Game Dev, R&D, Accounting, Marketing), agent team delegation, and external AI engine dispatch (Codex CLI, Gemini CLI). Chase built it to manage his own tendency to start too many projects — it enforces a 5-project active limit and gives each project its own status tracking, context, and department routing. See the dedicated Dream Factory knowledge entry for full details.
+## Open Hive
+A coordination layer for AI agent teams. When multiple developers or AI agents work on the same codebase, Open Hive detects overlapping work before it becomes a merge conflict. A Claude Code plugin hooks into 7 lifecycle events, passively reporting developer intent to a lightweight Fastify backend that runs three-tier collision detection (file, directory, semantic). The design metaphor: "the hive knows the org, the nerve knows its human." Each plugin instance is a "nerve" that maintains local state about its developer (session history, work patterns, blockers) and sends signals to the hive. The hive runs collision detection, manages agent-to-agent mail, and coordinates across all connected nerves. Agent mail survives session restarts by addressing messages to developer email rather than ephemeral session IDs. Signal relevance decays exponentially over time. The architecture follows hexagonal ports-and-adapters with 5 port interfaces, and every production integration (Slack, OAuth, PostgreSQL, etc.) is a Claude Code skill — a markdown file that Claude reads and executes. Two plugins: one for developers (collision awareness), one for admins (backend configuration via `/hive-admin install <skill>`). 182 tests, 12 skills, TypeScript/Fastify/SQLite/Docker. Currently being dogfooded at Tapcheck.
+
+## Dream Factory / Open Workshop
+A Claude Code plugin that turns a single Claude Code session into a multi-agent software studio. Originally called Dream Factory, now evolved into **Open Workshop**. It has specialized departments (Engineering, Art/Design, Game Dev, R&D, Accounting, Marketing), agent team delegation, and external AI engine dispatch (Codex CLI, Gemini CLI). Chase built it to manage their own tendency to start too many projects — it enforces a 10-project active limit and gives each project its own status tracking, context, and department routing. See the dedicated Dream Factory knowledge entry for full details.
 
 ## Millennium: The Living Duel
 A competitive card game where the rules are "common law" — players argue interpretations and an AI arbiter judges based on logic, not prose. The AI uses LLMs for what they're actually good at: judgment and interpretation of ambiguous situations. The game has a Qdrant-backed precedent system where arbiter rulings persist and inform future decisions. 665 server tests, Docker deployment (API, client, Qdrant), OpenRouter for LLM routing. This is Chase's most actively developed personal project.
@@ -25,7 +28,7 @@ A virtual tabletop tool with an AI Dungeon Master powered by a RAG pipeline for 
 A coffee shop SaaS platform that gives independent shops a modern visual ordering experience while keeping their existing POS system (Square, Toast, Clover). Multi-app architecture with customer ordering, shop admin, and POS sync. Built with React, Next.js, and Ionic/Capacitor for mobile. Currently on hold.
 
 ## Homelab
-Chase self-hosts 15+ services on his home network, exposed through Cloudflare tunnels. This includes development infrastructure, media services, and the backing services for his projects (Qdrant, Ollama, etc.). The homelab is where the portfolio's Ask Axiom RAG pipeline runs — Qdrant for vector storage, Ollama for embeddings, all self-hosted.
+Chase self-hosts 15+ services on their home network, exposed through Cloudflare tunnels. This includes development infrastructure, media services, and the backing services for their projects (Qdrant, Ollama, etc.). The homelab is where the portfolio's Ask Axiom RAG pipeline runs — Qdrant for vector storage, Ollama for embeddings, all self-hosted.
 
 ## Open Source Contributions
 - **comfyui-mcp-server**: Contributed bug fixes (5 server bugs + 4 Windows test failures) and CI improvements to the open source MCP server for ComfyUI
