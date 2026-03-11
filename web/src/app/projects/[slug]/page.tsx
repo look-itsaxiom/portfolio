@@ -1,12 +1,42 @@
+import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { getAllProjects, getProjectBySlug } from "@/lib/content"
 import { ArrowLeft } from "lucide-react"
+import { SITE_URL, projectJsonLd } from "@/lib/seo"
 
 export function generateStaticParams() {
   return getAllProjects().map((entry) => ({ slug: entry.slug }))
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  try {
+    const entry = getProjectBySlug(slug)
+    return {
+      title: entry.title,
+      description: entry.summary,
+      keywords: [...entry.stack, ...entry.tags],
+      openGraph: {
+        type: "article",
+        title: entry.title,
+        description: entry.summary,
+        url: `${SITE_URL}/projects/${slug}`,
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: entry.title,
+        description: entry.summary,
+      },
+      alternates: {
+        canonical: `${SITE_URL}/projects/${slug}`,
+      },
+    }
+  } catch {
+    return {}
+  }
 }
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -26,6 +56,11 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd(entry)) }}
+      />
+
       <Link
         href="/projects"
         className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground sm:mb-8"

@@ -1,5 +1,17 @@
+import type { Metadata } from "next"
 import { getAllProjects } from "@/lib/content"
 import { ProjectCard } from "@/components/project-card"
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description:
+    "Professional work and personal experiments — product-grade systems, AI-native tools, and open source contributions by Chase Skibeness.",
+  openGraph: {
+    title: "Projects | Chase Skibeness",
+    description:
+      "Professional work and personal experiments — product-grade systems, AI-native tools, and open source contributions.",
+  },
+}
 
 export default function ProjectsPage() {
   const projects = getAllProjects()

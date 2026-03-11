@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import fs from "node:fs"
 import path from "node:path"
 import matter from "gray-matter"
@@ -6,10 +7,26 @@ import { GraduationCap } from "lucide-react"
 
 type Highlight = { text: string; href?: string }
 
-export default function AboutPage() {
-  const aboutPath = path.join(process.cwd(), "data", "about.md")
+const aboutPath = path.join(process.cwd(), "data", "about.md")
+
+function getAboutData() {
   const raw = fs.readFileSync(aboutPath, "utf-8")
-  const { data, content } = matter(raw)
+  return matter(raw)
+}
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Systems-minded engineer who builds product-grade platforms and AI-native experiments. B.S. IT Management, WGU. Based in Seattle.",
+  openGraph: {
+    title: "About Chase Skibeness",
+    description:
+      "Systems-minded engineer who builds product-grade platforms and AI-native experiments.",
+  },
+}
+
+export default function AboutPage() {
+  const { data, content } = getAboutData()
   const paragraphs = content.trim().split(/\n\n+/)
   const principles = (data.principles ?? []) as string[]
   const highlights = (data.highlights ?? []) as Highlight[]

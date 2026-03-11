@@ -1,12 +1,45 @@
+import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { getAllDevlog, getDevlogBySlug } from "@/lib/content"
 import { ArrowLeft } from "lucide-react"
+import { SITE_URL, devlogJsonLd } from "@/lib/seo"
 
 export function generateStaticParams() {
   return getAllDevlog().map((entry) => ({ slug: entry.slug }))
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  try {
+    const entry = getDevlogBySlug(slug)
+    return {
+      title: entry.title,
+      description: entry.summary,
+      keywords: entry.tags,
+      openGraph: {
+        type: "article",
+        title: entry.title,
+        description: entry.summary,
+        url: `${SITE_URL}/devlog/${slug}`,
+        publishedTime: entry.date,
+        authors: ["Chase Skibeness"],
+        tags: entry.tags,
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: entry.title,
+        description: entry.summary,
+      },
+      alternates: {
+        canonical: `${SITE_URL}/devlog/${slug}`,
+      },
+    }
+  } catch {
+    return {}
+  }
 }
 
 export default async function DevlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -20,6 +53,11 @@ export default async function DevlogDetailPage({ params }: { params: Promise<{ s
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(devlogJsonLd(entry)) }}
+      />
+
       <Link
         href="/devlog"
         className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"

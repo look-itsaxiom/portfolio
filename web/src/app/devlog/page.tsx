@@ -1,5 +1,16 @@
+import type { Metadata } from "next"
 import { getAllDevlog } from "@/lib/content"
 import { DevlogCard } from "@/components/devlog-card"
+
+export const metadata: Metadata = {
+  title: "DevLog",
+  description:
+    "Shipping notes, experiments, and the story behind the work — engineering devlog by Chase Skibeness.",
+  openGraph: {
+    title: "DevLog | Chase Skibeness",
+    description: "Shipping notes, experiments, and the story behind the work.",
+  },
+}
 
 export default function DevlogIndexPage() {
   const devlog = getAllDevlog().sort((a, b) => b.date.localeCompare(a.date))
