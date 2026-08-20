@@ -108,7 +108,17 @@ function compactHistory(messages: UIMessage[]): string {
 
 // Stream a fixed string back in the UI message format the client expects.
 function streamTextResponse(text: string) {
-  return streamTextResponse(text)
+  const partId = randomUUID()
+  return createUIMessageStreamResponse({
+    stream: createUIMessageStream({
+      execute: ({ writer }) => {
+        writer.write({ type: "text-start", id: partId })
+        writer.write({ type: "text-delta", delta: text, id: partId })
+        writer.write({ type: "text-end", id: partId })
+        writer.write({ type: "finish", finishReason: "stop" })
+      },
+    }),
+  })
 }
 
 // The AI SDK nests the real cause under .errors / .lastError / .cause, so walk
@@ -236,15 +246,5 @@ export async function POST(req: Request) {
 
   const text = responseText.replace(/^\[ASK_CHASE\]\s*/i, "").trim()
     || "Hmm, I'm not sure how to answer that. Try asking me about one of Chase's projects!"
-  const partId = randomUUID()
-  return createUIMessageStreamResponse({
-    stream: createUIMessageStream({
-      execute: ({ writer }) => {
-        writer.write({ type: "text-start", id: partId })
-        writer.write({ type: "text-delta", delta: text, id: partId })
-        writer.write({ type: "text-end", id: partId })
-        writer.write({ type: "finish", finishReason: "stop" })
-      },
-    }),
-  })
+  return streamTextResponse(text)
 }
