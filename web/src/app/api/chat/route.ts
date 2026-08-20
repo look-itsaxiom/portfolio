@@ -106,6 +106,36 @@ function compactHistory(messages: UIMessage[]): string {
   return lines.length > 0 ? lines.join("\n") : ""
 }
 
+// Stream a fixed string back in the UI message format the client expects.
+function streamTextResponse(text: string) {
+  return streamTextResponse(text)
+}
+
+// The AI SDK nests the real cause under .errors / .lastError / .cause, so walk
+// the whole chain rather than trusting the top-level error shape.
+function isQuotaError(err: unknown): boolean {
+  const seen = new Set<unknown>()
+  const stack: unknown[] = [err]
+  while (stack.length) {
+    const node = stack.pop()
+    if (!node || typeof node !== "object" || seen.has(node)) continue
+    seen.add(node)
+    const rec = node as Record<string, unknown>
+    if (rec.statusCode === 429) return true
+    if (
+      typeof rec.message === "string" &&
+      /RESOURCE_EXHAUSTED|spending cap|quota|429/i.test(rec.message)
+    ) {
+      return true
+    }
+    for (const key of ["cause", "lastError", "error"]) {
+      if (rec[key]) stack.push(rec[key])
+    }
+    if (Array.isArray(rec.errors)) stack.push(...rec.errors)
+  }
+  return false
+}
+
 function makeDiscordFallback(
   userQuery: string,
   pageContext: string | undefined,
@@ -128,17 +158,7 @@ function makeDiscordFallback(
   }).catch((err) => console.error("Discord DM failed:", err))
 
   const fallbackText = `That's a great question — I want to make sure I get it right, so I've asked Chase directly. This might take a few minutes!\n\n_Session: ${sessionId}_`
-  const partId = randomUUID()
-  return createUIMessageStreamResponse({
-    stream: createUIMessageStream({
-      execute: ({ writer }) => {
-        writer.write({ type: "text-start", id: partId })
-        writer.write({ type: "text-delta", delta: fallbackText, id: partId })
-        writer.write({ type: "text-end", id: partId })
-        writer.write({ type: "finish", finishReason: "stop" })
-      },
-    }),
-  })
+  return streamTextResponse(fallbackText)
 }
 
 export async function POST(req: Request) {
@@ -180,12 +200,24 @@ export async function POST(req: Request) {
 
   const modelMessages = await convertToModelMessages(messages)
 
-  const result = await generateText({
-    model: google(GEMINI_MODEL),
-    system: buildSystemPrompt(ragContext, pageContext),
-    messages: modelMessages,
-    maxOutputTokens: 1200,
-  })
+  let result: Awaited<ReturnType<typeof generateText>>
+  try {
+    result = await generateText({
+      model: google(GEMINI_MODEL),
+      system: buildSystemPrompt(ragContext, pageContext),
+      messages: modelMessages,
+      maxOutputTokens: 1200,
+    })
+  } catch (err) {
+    // Provider failure (quota exhausted, outage, network). Degrade to a readable
+    // message instead of a bare 500 that renders as a broken chat box.
+    console.error("Gemini generation failed:", err)
+    return streamTextResponse(
+      isQuotaError(err)
+        ? "I'm offline for a moment - the AI quota behind me has run out. Please try again later, or reach out to Chase directly!"
+        : "Sorry, I couldn't reach my brain just then. Give it another try in a moment!"
+    )
+  }
 
   const responseText = result.text || ""
 
