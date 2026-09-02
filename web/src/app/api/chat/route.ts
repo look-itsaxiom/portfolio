@@ -1,4 +1,4 @@
-import { createGoogleGenerativeAI } from "@ai-sdk/google"
+import { createOpenRouter } from "@openrouter/ai-sdk-provider"
 import {
   generateText,
   UIMessage,
@@ -8,13 +8,14 @@ import {
 } from "ai"
 import { searchKnowledge, isRagAvailable, isCollectionSeeded } from "@/lib/rag"
 import { createSession } from "@/lib/sessions"
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit"
 import { randomUUID } from "crypto"
 
-const google = createGoogleGenerativeAI({
-  apiKey: process.env.GEMINI_API_KEY,
+const openrouter = createOpenRouter({
+  apiKey: process.env.OPENROUTER_API_KEY,
 })
 
-const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash"
+const CHAT_MODEL = process.env.CHAT_MODEL || "google/gemini-2.5-flash"
 const DISCORD_BOT_URL = process.env.DISCORD_BOT_URL
 
 function buildSystemPrompt(ragContext: string, pageContext?: string): string {
@@ -123,6 +124,7 @@ function streamTextResponse(text: string) {
 
 // The AI SDK nests the real cause under .errors / .lastError / .cause, so walk
 // the whole chain rather than trusting the top-level error shape.
+// OpenRouter signals exhausted credit with 402 and rate limits with 429.
 function isQuotaError(err: unknown): boolean {
   const seen = new Set<unknown>()
   const stack: unknown[] = [err]
@@ -131,10 +133,10 @@ function isQuotaError(err: unknown): boolean {
     if (!node || typeof node !== "object" || seen.has(node)) continue
     seen.add(node)
     const rec = node as Record<string, unknown>
-    if (rec.statusCode === 429) return true
+    if (rec.statusCode === 429 || rec.statusCode === 402) return true
     if (
       typeof rec.message === "string" &&
-      /RESOURCE_EXHAUSTED|spending cap|quota|429/i.test(rec.message)
+      /RESOURCE_EXHAUSTED|spending cap|quota|insufficient credit|\b(402|429)\b/i.test(rec.message)
     ) {
       return true
     }
@@ -172,6 +174,25 @@ function makeDiscordFallback(
 }
 
 export async function POST(req: Request) {
+  // Metered provider behind a public endpoint: throttle per IP before anything
+  // else runs (embeddings and generation both cost).
+  const rate = checkRateLimit(getClientIp(req))
+  if (!rate.allowed) {
+    return new Response(
+      JSON.stringify({
+        error:
+          "Whoa there — you've hit the chat limit for now. Give it a few minutes and I'll be right here!",
+      }),
+      {
+        status: 429,
+        headers: {
+          "Content-Type": "application/json",
+          "Retry-After": String(rate.retryAfter),
+        },
+      }
+    )
+  }
+
   const { messages, context }: { messages: UIMessage[]; context?: { page?: string; section?: string } } =
     await req.json()
 
@@ -213,15 +234,15 @@ export async function POST(req: Request) {
   let result: Awaited<ReturnType<typeof generateText>>
   try {
     result = await generateText({
-      model: google(GEMINI_MODEL),
+      model: openrouter(CHAT_MODEL),
       system: buildSystemPrompt(ragContext, pageContext),
       messages: modelMessages,
       maxOutputTokens: 1200,
     })
   } catch (err) {
-    // Provider failure (quota exhausted, outage, network). Degrade to a readable
+    // Provider failure (credit exhausted, outage, network). Degrade to a readable
     // message instead of a bare 500 that renders as a broken chat box.
-    console.error("Gemini generation failed:", err)
+    console.error("AI provider generation failed:", err)
     return streamTextResponse(
       isQuotaError(err)
         ? "I'm offline for a moment - the AI quota behind me has run out. Please try again later, or reach out to Chase directly!"

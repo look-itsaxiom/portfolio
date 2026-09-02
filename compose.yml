@@ -9,8 +9,11 @@ services:
     volumes:
       - ./web/data:/app/data
     environment:
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
-      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.5-flash}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - CHAT_MODEL=${CHAT_MODEL:-google/gemini-2.5-flash}
+      - OPENROUTER_MODEL=${OPENROUTER_MODEL:-google/gemini-2.5-flash}
+      - OLLAMA_URL=${OLLAMA_URL:-http://ollama:11434}
+      - EMBED_MODEL=${EMBED_MODEL:-nomic-embed-text}
       - QDRANT_URL=http://qdrant:6333
       - QDRANT_COLLECTION=${QDRANT_COLLECTION:-ask-axiom-knowledge}
       - DISCORD_BOT_URL=http://ask-axiom-bot:3100
@@ -33,7 +36,8 @@ services:
       - ./web/data:/app/data
     environment:
       - ADMIN_SECRET=${ADMIN_SECRET}
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - OLLAMA_URL=${OLLAMA_URL:-http://ollama:11434}
+      - EMBED_MODEL=${EMBED_MODEL:-nomic-embed-text}
       - QDRANT_URL=http://qdrant:6333
       - QDRANT_COLLECTION=${QDRANT_COLLECTION:-ask-axiom-knowledge}
       - REVALIDATE_SECRET=${REVALIDATE_SECRET}

@@ -1,7 +1,7 @@
+import { getEmbedding, isEmbeddingAvailable } from "./embeddings"
+
 const QDRANT_URL = process.env.QDRANT_URL || "http://localhost:6333"
 const COLLECTION = process.env.QDRANT_COLLECTION || "ask-axiom-knowledge"
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || ""
-const EMBED_MODEL = process.env.EMBED_MODEL || "gemini-embedding-001"
 const SIMILARITY_THRESHOLD = 0.65
 
 export interface RagResult {
@@ -10,24 +10,7 @@ export interface RagResult {
   score: number
 }
 
-export async function getEmbedding(text: string): Promise<number[]> {
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${EMBED_MODEL}:embedContent?key=${GEMINI_API_KEY}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: { parts: [{ text }] } }),
-      signal: AbortSignal.timeout(10000),
-    }
-  )
-
-  if (!res.ok) {
-    throw new Error(`Gemini embedding failed: ${res.status} ${await res.text()}`)
-  }
-
-  const data = await res.json()
-  return data.embedding.values
-}
+export { getEmbedding }
 
 export async function searchKnowledge(
   query: string,
@@ -110,9 +93,10 @@ export async function isCollectionSeeded(): Promise<boolean> {
   }
 }
 
+// RAG needs BOTH halves alive: the local embedder and the vector store.
 export async function isRagAvailable(): Promise<boolean> {
   try {
-    if (!GEMINI_API_KEY) return false
+    if (!(await isEmbeddingAvailable())) return false
     const qdrant = await fetch(`${QDRANT_URL}/collections`, {
       signal: AbortSignal.timeout(3000),
     })

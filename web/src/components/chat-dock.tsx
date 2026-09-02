@@ -79,7 +79,7 @@ export function ChatDock({ variant, suggestedPrompts = [] }: ChatDockProps) {
         const coreDown =
           data.openrouter === "error" ||
           (data.qdrant !== "unconfigured" && data.qdrant === "error") ||
-          (data.ollama !== "unconfigured" && data.ollama === "error")
+          (data.embeddings !== "unconfigured" && data.embeddings === "error")
         if (coreDown) setChatDisabled(true)
       })
       .catch(() => {

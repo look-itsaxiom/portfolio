@@ -1,45 +1,38 @@
 import { NextResponse } from "next/server"
+import { isEmbeddingAvailable } from "@/lib/embeddings"
 
 type CheckState = "ok" | "error" | "quota_exceeded" | "unconfigured"
 
-// A real Gemini probe costs quota, so the verdict is cached briefly. A health
-// endpoint that hammers a metered API becomes its own outage.
-const GEMINI_CACHE_MS = 60_000
-let geminiCache: { state: CheckState; detail?: string; at: number } | null = null
+// Probing the provider costs a round-trip (and rate-limit budget), so the
+// verdict is cached briefly. A health endpoint that hammers a metered API
+// becomes its own outage.
+const PROVIDER_CACHE_MS = 60_000
+let providerCache: { state: CheckState; detail?: string; at: number } | null = null
 
-async function probeGemini(): Promise<{ state: CheckState; detail?: string }> {
-  const key = process.env.GEMINI_API_KEY
+async function probeOpenRouter(): Promise<{ state: CheckState; detail?: string }> {
+  const key = process.env.OPENROUTER_API_KEY
   if (!key) return { state: "unconfigured" }
 
-  if (geminiCache && Date.now() - geminiCache.at < GEMINI_CACHE_MS) {
-    return { state: geminiCache.state, detail: geminiCache.detail }
+  if (providerCache && Date.now() - providerCache.at < PROVIDER_CACHE_MS) {
+    return { state: providerCache.state, detail: providerCache.detail }
   }
 
-  const model = process.env.GEMINI_MODEL || "gemini-2.5-flash"
   let verdict: { state: CheckState; detail?: string }
 
   try {
-    // Smallest possible real generation. Proves the key is *usable* rather than
-    // merely present -- a spend cap returns 429 while the key still authenticates.
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "x-goog-api-key": key },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: "ping" }] }],
-          generationConfig: { maxOutputTokens: 1 },
-        }),
-        signal: AbortSignal.timeout(8000),
-      }
-    )
+    // Authenticated but free call: proves the key is accepted without spending
+    // tokens on a generation.
+    const res = await fetch("https://openrouter.ai/api/v1/models", {
+      headers: { Authorization: `Bearer ${key}` },
+      signal: AbortSignal.timeout(8000),
+    })
 
     if (res.ok) {
       verdict = { state: "ok" }
-    } else if (res.status === 429) {
-      verdict = { state: "quota_exceeded", detail: "HTTP 429 from Gemini" }
+    } else if (res.status === 429 || res.status === 402) {
+      verdict = { state: "quota_exceeded", detail: `HTTP ${res.status} from OpenRouter` }
     } else {
-      verdict = { state: "error", detail: `HTTP ${res.status} from Gemini` }
+      verdict = { state: "error", detail: `HTTP ${res.status} from OpenRouter` }
     }
   } catch (err) {
     verdict = {
@@ -48,8 +41,12 @@ async function probeGemini(): Promise<{ state: CheckState; detail?: string }> {
     }
   }
 
-  geminiCache = { ...verdict, at: Date.now() }
+  providerCache = { ...verdict, at: Date.now() }
   return verdict
+}
+
+async function probeEmbeddings(): Promise<CheckState> {
+  return (await isEmbeddingAvailable()) ? "ok" : "error"
 }
 
 async function probeUrl(url: string | undefined, path: string): Promise<CheckState> {
@@ -63,14 +60,16 @@ async function probeUrl(url: string | undefined, path: string): Promise<CheckSta
 }
 
 export async function GET() {
-  const [gemini, qdrant, discordBot] = await Promise.all([
-    probeGemini(),
+  const [openrouter, embeddings, qdrant, discordBot] = await Promise.all([
+    probeOpenRouter(),
+    probeEmbeddings(),
     probeUrl(process.env.QDRANT_URL, "/collections"),
     probeUrl(process.env.DISCORD_BOT_URL, "/health"),
   ])
 
   const checks: Record<string, CheckState> = {
-    gemini: gemini.state,
+    openrouter: openrouter.state,
+    embeddings,
     qdrant,
     discordBot,
   }
@@ -80,7 +79,7 @@ export async function GET() {
   )
 
   return NextResponse.json(
-    gemini.detail ? { ...checks, geminiDetail: gemini.detail } : checks,
+    openrouter.detail ? { ...checks, openrouterDetail: openrouter.detail } : checks,
     { status: allOk ? 200 : 503 }
   )
 }

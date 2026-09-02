@@ -1,10 +1,9 @@
 import { readFileSync, readdirSync, statSync } from "fs"
 import { join, relative } from "path"
+import { getEmbedding } from "../src/lib/embeddings"
 
-const QDRANT_URL = process.env.QDRANT_URL || "http://home.skib:6333"
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || ""
+const QDRANT_URL = process.env.QDRANT_URL || "http://localhost:6333"
 const COLLECTION = process.env.QDRANT_COLLECTION || "ask-axiom-knowledge"
-const EMBED_MODEL = process.env.EMBED_MODEL || "gemini-embedding-001"
 
 interface KnowledgeChunk {
   text: string
@@ -69,30 +68,28 @@ function sourceFromPath(filePath: string, knowledgeDir: string): string {
   return relative(knowledgeDir, filePath).replace(/\.md$/, "").replace(/\\/g, "/")
 }
 
-async function getEmbedding(text: string): Promise<number[]> {
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${EMBED_MODEL}:embedContent?key=${GEMINI_API_KEY}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: { parts: [{ text }] } }),
-    }
-  )
-
-  if (!res.ok) {
-    throw new Error(`Gemini embedding failed: ${res.status} ${await res.text()}`)
-  }
-
-  const data = await res.json()
-  return data.embedding.values
-}
-
+// The embedder decides the vector width. If the live collection was built with a
+// different model (e.g. the old 3072-dim Gemini vectors), it MUST be dropped and
+// rebuilt or every upsert fails on a dimension mismatch.
 async function ensureCollection(dimension: number) {
-  // Check if collection exists
   const check = await fetch(`${QDRANT_URL}/collections/${COLLECTION}`)
   if (check.ok) {
-    console.log(`Collection "${COLLECTION}" already exists, deleting...`)
-    await fetch(`${QDRANT_URL}/collections/${COLLECTION}`, { method: "DELETE" })
+    const data = await check.json()
+    const existing =
+      data.result?.config?.params?.vectors?.size ??
+      data.result?.config?.params?.vectors?.[""]?.size ??
+      null
+    if (existing !== null && existing !== dimension) {
+      console.log(
+        `Collection "${COLLECTION}" exists with dimension ${existing}, but embeddings are ${dimension}-dim. Recreating...`
+      )
+    } else {
+      console.log(`Collection "${COLLECTION}" already exists, recreating for a clean seed...`)
+    }
+    const del = await fetch(`${QDRANT_URL}/collections/${COLLECTION}`, { method: "DELETE" })
+    if (!del.ok) {
+      throw new Error(`Failed to delete collection: ${await del.text()}`)
+    }
   }
 
   // Create collection
@@ -200,4 +197,7 @@ async function main() {
   console.log(`Done! Seeded ${id - 1} knowledge chunks into "${COLLECTION}"`)
 }
 
-main().catch(console.error)
+main().catch((err) => {
+  console.error(err)
+  process.exit(1)
+})

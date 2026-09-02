@@ -3,7 +3,7 @@ import { useApi } from "../hooks/useApi"
 interface HealthData {
   status: string
   qdrant: string
-  ollama: string
+  embeddings: string
 }
 
 interface RagStats {
@@ -75,7 +75,7 @@ export default function DashboardPage() {
           Service Status
         </h2>
         <StatusBadge label="Qdrant" status={health.data?.qdrant ?? ""} loading={health.loading} />
-        <StatusBadge label="Ollama" status={health.data?.ollama ?? ""} loading={health.loading} />
+        <StatusBadge label="Embeddings" status={health.data?.embeddings ?? ""} loading={health.loading} />
       </div>
 
       {(impact.error || labs.error || devlog.error || knowledge.error || ragStats.error || projects.error) && (

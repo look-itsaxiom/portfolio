@@ -1,4 +1,5 @@
-// Local embeddings via Ollama (CPU). Named ollama.ts and now actually Ollama.
+// Local embeddings via Ollama (CPU) — no external API key, no metered quota.
+// Shared by the RAG search path and the seed script.
 const OLLAMA_URL = process.env.OLLAMA_URL || "http://ollama:11434"
 const EMBED_MODEL = process.env.EMBED_MODEL || "nomic-embed-text"
 
@@ -11,7 +12,7 @@ export async function getEmbedding(text: string): Promise<number[]> {
   })
 
   if (!res.ok) {
-    throw new Error(`Embedding failed: ${res.status}`)
+    throw new Error(`Embedding failed: ${res.status} ${await res.text()}`)
   }
 
   const data = await res.json()

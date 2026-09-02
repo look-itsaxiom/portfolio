@@ -10,7 +10,7 @@ healthRouter.get("/", async (_req, res) => {
   res.json({
     status: "ok",
     qdrant: qdrant ? "ok" : "error",
-    gemini: embedding ? "ok" : "unconfigured",
+    embeddings: embedding ? "ok" : "error",
     adminSecret: process.env.ADMIN_SECRET ? "configured" : "missing",
   })
 })

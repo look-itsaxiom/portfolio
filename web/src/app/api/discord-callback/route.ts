@@ -8,7 +8,8 @@ const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY,
 })
 
-const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || "arcee-ai/trinity-large-preview:free"
+const OPENROUTER_MODEL =
+  process.env.OPENROUTER_MODEL || process.env.CHAT_MODEL || "google/gemini-2.5-flash"
 
 export async function POST(req: Request) {
   const { sessionId, reply } = await req.json()
