@@ -67,6 +67,7 @@ function categorize(filePath: string): string {
   if (filePath.includes("meta")) return "meta"
   if (filePath.includes("devlog")) return "devlog"
   if (filePath.includes("impact")) return "impact"
+  if (filePath.includes("projects")) return "project"
   return "general"
 }
 
@@ -83,8 +84,12 @@ export async function runSeed() {
   seedStatus.completedAt = undefined
 
   try {
-    // Index knowledge, devlog, and impact directories
-    const dirs = ["knowledge", "devlog", "impact"]
+    // Index every content directory that feeds the site. "projects" was
+    // missing here, which meant Ask Axiom had no grounding for any project
+    // page and would confabulate when asked about one. "impact" does not
+    // exist on disk; getMarkdownFiles tolerates absent dirs, so listing it
+    // is harmless and keeps the door open if it is ever added.
+    const dirs = ["knowledge", "devlog", "projects", "impact"]
     const files: string[] = []
     for (const dir of dirs) {
       files.push(...getMarkdownFiles(path.join(DATA_DIR, dir)))
