@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { getAllProjects, getProjectBySlug } from "@/lib/content"
 import { ArrowLeft } from "lucide-react"
+import { ProjectEmbed } from "@/components/project-embed"
 import { SITE_URL, projectJsonLd } from "@/lib/seo"
 
 export function generateStaticParams() {
@@ -86,6 +87,17 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           </Badge>
         ))}
       </div>
+
+      {entry.embed ? (
+        <ProjectEmbed
+          src={entry.embed.src}
+          title={entry.embed.title}
+          width={entry.embed.width}
+          height={entry.embed.height}
+          fallbackHref={entry.embed.fallbackHref}
+          fallbackLabel={entry.embed.fallbackLabel}
+        />
+      ) : null}
 
       <Separator className="my-6 sm:my-10" />
 

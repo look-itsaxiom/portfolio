@@ -6,6 +6,15 @@ const DATA_ROOT = path.join(process.cwd(), "data")
 
 type Link = { label: string; href: string }
 
+export type ProjectEmbed = {
+  src: string
+  title?: string
+  width?: number
+  height?: number
+  fallbackHref?: string
+  fallbackLabel?: string
+}
+
 export type ProjectEntry = {
   slug: string
   title: string
@@ -17,6 +26,7 @@ export type ProjectEntry = {
   stack: string[]
   tags: string[]
   links?: Link[]
+  embed?: ProjectEmbed
 }
 
 export type DevlogEntry = {
@@ -55,6 +65,7 @@ export function getAllProjects(): ProjectEntry[] {
       stack: data.stack ?? [],
       tags: data.tags ?? [],
       links: data.links,
+      embed: data.embed,
     }
   })
 }
@@ -73,6 +84,7 @@ export function getProjectBySlug(slug: string) {
     stack: data.stack ?? [],
     tags: data.tags ?? [],
     links: data.links,
+    embed: data.embed,
   } as ProjectEntry & { content: string }
 }
 
