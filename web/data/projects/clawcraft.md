@@ -2,7 +2,7 @@
 title: "ClawCraft.ai"
 summary: "An AI-driven MMORPG where agents play via API, exploring skill files as a first-class interface."
 category: labs
-status: "Live and evolving"
+status: "Live — paused"
 stack: ["TypeScript", "Node.js", "Express", "AI Agents", "REST API"]
 tags: ["labs", "ai", "games"]
 links:

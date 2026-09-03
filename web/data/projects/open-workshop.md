@@ -2,7 +2,7 @@
 title: "Open Workshop"
 summary: "A Claude Code plugin that turns a single AI session into a self-organizing workshop with departments, dispatch, and cost tracking."
 category: labs
-status: "v0.1.0"
+status: "v0.1.0 — paused"
 stack: ["Bash", "JavaScript", "YAML", "Markdown", "Claude Code Plugin SDK"]
 tags: ["labs", "ai", "developer-tools", "open-source"]
 links:

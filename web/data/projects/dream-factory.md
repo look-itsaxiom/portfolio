@@ -2,7 +2,7 @@
 title: "Dream Factory"
 summary: "A Claude Code plugin that turns a single AI session into a multi-agent software studio with departments, agent teams, and external engine dispatch."
 category: "labs"
-status: "Published"
+status: "Published — superseded by Open Workshop"
 stack: ["YAML", "JavaScript", "Bash", "Claude Code Plugin SDK"]
 tags: ["labs", "ai", "developer-tools"]
 links:

@@ -2,7 +2,7 @@
 title: "Open Hive"
 summary: "Coordination layer for AI agent teams — collision detection, agent mail, nerve state, and a skills-based extensibility model where integrations are documentation files that Claude executes."
 category: "labs"
-status: "v1.3"
+status: "v1.3.2 — paused"
 stack: ["TypeScript","Fastify","Node.js SQLite","Docker","Claude Code Plugin SDK","Turborepo"]
 tags: ["labs","ai","developer-tools","agent-coordination"]
 links:

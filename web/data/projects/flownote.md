@@ -2,7 +2,7 @@
 title: "FlowNote"
 summary: "A note-taking app with inline calculations — write naturally, compute seamlessly."
 category: "labs"
-status: "On Hold"
+status: "On hold"
 stack: ["TypeScript","React","Vite","Express","Firebase"]
 tags: ["labs","productivity"]
 ---

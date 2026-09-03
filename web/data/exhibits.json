@@ -1,11 +1,27 @@
 [
   {
-    "slug": "millennium",
-    "title": "Millennium: The Living Duel",
+    "slug": "govert",
+    "title": "GoVert",
     "category": "labs",
-    "description": "665 tests. An AI arbiter. Rules that evolve through play.",
-    "axiomNote": "This is what happens when you let an AI judge a card game.",
-    "href": "/projects/millennium"
+    "description": "A multiplayer platformer-racer with no menus. Playable in your browser.",
+    "axiomNote": "Every menu is a place you stand. Play it right on the page.",
+    "href": "/projects/govert"
+  },
+  {
+    "slug": "ask-axiom",
+    "title": "Ask Axiom",
+    "category": "labs",
+    "description": "The AI curator you are talking to \u2014 RAG over a curated knowledge base.",
+    "axiomNote": "Chase is bad at self-promotion, so they built something that isn't.",
+    "href": "/projects/ask-axiom"
+  },
+  {
+    "slug": "integration-platform",
+    "title": "No-Code Integration Platform",
+    "category": "professional",
+    "description": "Onboarding in days, not weeks.",
+    "axiomNote": "Chase led this with a small team \u2014 the impact is very real.",
+    "href": "/projects/integration-platform"
   },
   {
     "slug": "dream-factory",
@@ -14,37 +30,5 @@
     "description": "Chase built this to manage 5 projects from one terminal.",
     "axiomNote": "A plugin that turns one session into a software studio.",
     "href": "/projects/dream-factory"
-  },
-  {
-    "slug": "clawcraft",
-    "title": "ClawCraft.ai",
-    "category": "labs",
-    "description": "A game built for AI agents.",
-    "axiomNote": "This is what happens when APIs become the game client.",
-    "href": "/projects/clawcraft"
-  },
-  {
-    "slug": "integration-platform",
-    "title": "No-Code Integration Platform",
-    "category": "professional",
-    "description": "Onboarding in days, not weeks.",
-    "axiomNote": "Chase led this with a small team — the impact is very real.",
-    "href": "/projects/integration-platform"
-  },
-  {
-    "slug": "axiom-stage",
-    "title": "Ask Axiom Stage",
-    "category": "devlog",
-    "description": "Ask Axiom becomes the hero experience.",
-    "axiomNote": "A curator should have a stage.",
-    "href": "/devlog/2026-02-09-axiom-stage"
-  },
-  {
-    "slug": "trivia-1",
-    "title": "RAG Trivia",
-    "category": "trivia",
-    "description": "Chase likes building AI interfaces where docs are the UI.",
-    "axiomNote": "Docs as interface is a recurring theme.",
-    "href": "/about"
   }
 ]
