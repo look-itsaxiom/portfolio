@@ -22,13 +22,5 @@
     "description": "Onboarding in days, not weeks.",
     "axiomNote": "Chase led this with a small team \u2014 the impact is very real.",
     "href": "/projects/integration-platform"
-  },
-  {
-    "slug": "dream-factory",
-    "title": "Dream Factory",
-    "category": "labs",
-    "description": "Chase built this to manage 5 projects from one terminal.",
-    "axiomNote": "A plugin that turns one session into a software studio.",
-    "href": "/projects/dream-factory"
   }
 ]
