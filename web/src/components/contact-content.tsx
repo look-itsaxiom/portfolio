@@ -1,8 +1,14 @@
 "use client"
 
-import { Mail, Github, Linkedin, MapPin } from "lucide-react"
+import { Mail, Github, Linkedin, MapPin, Briefcase } from "lucide-react"
 
 const contactLinks = [
+  {
+    icon: Briefcase,
+    label: "Hire me through SkibbySoft",
+    value: "skibbysoft.com: contract work, corp-to-corp",
+    href: "https://skibbysoft.com",
+  },
   {
     icon: Mail,
     label: "Email",
@@ -31,7 +37,7 @@ export function ContactContent() {
       </h1>
       <p className="mt-3 text-muted-foreground">
         Open to collaboration, consulting, and conversations about what you&apos;re building.
-        Currently available for contract work and interesting full-time opportunities.
+        Contract work goes through my company, SkibbySoft.
       </p>
 
       <div className="mt-10 space-y-6">
